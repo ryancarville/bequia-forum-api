@@ -1,4 +1,5 @@
 require('dotenv').config;
+const { CLIENT_ORIGIN } = require('./config');
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
@@ -11,8 +12,14 @@ const app = express();
 const morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
 app.use(morgan(morganOption));
 app.use(cors());
+app.use(
+	cors({
+		origin: CLIENT_ORIGIN
+	})
+);
 app.use(helemt());
 app.use(JsonParser);
+
 app.get('/', (req, res) => {
 	res.send('Hello, boilerplate!');
 });
