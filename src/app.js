@@ -2,15 +2,14 @@ require('dotenv').config;
 const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
-const helemt = require('helmet');
+const helmet = require('helmet');
 const jsonBodyParser = express.json();
 const { NODE_ENV, CLIENT_ORIGIN } = require('./config');
 const app = express();
 const morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
 //routers
 const authRouter = require('./auth/auth-router');
-const singUpRouter = require('./signUp/signUp-router');
-const logInRouter = require('./logIn/logIn-router');
+const signUpRouter = require('./signUp/signUp-router');
 const forumRouter = require('./forum/forum-router');
 const jobsRouter = require('./jobs/jobs-router');
 const eventsRouter = require('./events/events-router');
@@ -24,12 +23,11 @@ app.use(
 		origin: CLIENT_ORIGIN
 	})
 );
-app.use(helemt());
+app.use(helmet());
 app.use(jsonBodyParser);
 //paths
-app.use('/singUp', singUpRouter);
-app.use('/login', logInRouter);
-app.use('/auth', authRouter);
+app.use('/singUp', signUpRouter);
+app.use('/login', authRouter);
 app.use('/forum', forumRouter);
 app.use('/events', eventsRouter);
 app.use('/jobs', jobsRouter);
