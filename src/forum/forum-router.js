@@ -22,6 +22,7 @@ forumRouter
 			});
 	})
 	.get('/messageBoards', (req, res, next) => {
+		const db = req.app.get('db');
 		ForumService.getAllMessageBoards(db)
 			.then(boards => {
 				if (!boards) {
@@ -53,7 +54,7 @@ forumRouter
 				next(err);
 			});
 	})
-	.get('/:boardId', (req, res, next) => {
+	.get('/get-posts-for/:boardId', (req, res, next) => {
 		const db = req.app.get('db');
 		const { boardId } = req.params;
 		ForumService.getSpecificBoardPosts(db, boardId)
@@ -92,6 +93,23 @@ forumRouter
 						path.posix.join('/messageBoard', `/${post.boardid}`, `/${post.id}`)
 					)
 					.json(ForumService.serializePost(post));
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
+	.patch('/edit/:postId', (req, res, next) => {
+		const db = req.app.get('db');
+		const id = req.params.postId;
+		const { boardid, title, content } = req.body;
+		const updatedPost = { id, boardid, title, content };
+		ForumService.updatePost(db, updatedPost)
+			.then(post => {
+				if (!post) {
+					return res.status(401).json({ error: `Post doesn't exists.` });
+				}
+				res.status(202).json(ForumService.serializePost(post));
 			})
 			.catch(err => {
 				console.log(err);

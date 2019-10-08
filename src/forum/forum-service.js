@@ -23,6 +23,12 @@ const ForumService = {
 			.returning('*')
 			.then(rows => rows[0]);
 	},
+	updatePost(db, updatedPost) {
+		return db
+			.into('bf_messagebaord_posts')
+			.where({ id: updatedPost.id })
+			.update(updatedPost);
+	},
 	deletePost(db, id) {
 		return db
 			.from('bf_messageboard_posts')
