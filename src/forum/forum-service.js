@@ -5,10 +5,25 @@ const ForumService = {
 		return db.select('*').from('bf_messageboard_sections');
 	},
 	getAllMessageBoards(db) {
-		return db.select('*').from('bf_messageboards');
+		return db.from('bf_messageboards');
 	},
 	getAllMessageBoardPosts(db) {
-		return db.select('*').from('bf_messageboard_posts');
+		return db
+			.table('bf_messageboard_posts')
+			.innerJoin('bf_users', 'bf_messageboard_posts.userid', '=', 'bf_users.id')
+			.orderBy('date', 'desc');
+	},
+	getNewestPosts(db) {
+		return db
+			.from('bf_messageboard_posts')
+			.orderBy('date', 'desc')
+			.limit(8)
+			.innerJoin(
+				'bf_users',
+				'bf_messageboard_posts.userid',
+				'=',
+				'bf_users.id'
+			);
 	},
 	getSpecificBoardPosts(db, boardid) {
 		return db

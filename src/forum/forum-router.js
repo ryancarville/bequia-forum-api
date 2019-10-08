@@ -38,6 +38,22 @@ forumRouter
 				next(err);
 			});
 	})
+	.get('/newestPosts', (req, res, next) => {
+		const db = req.app.get('db');
+		ForumService.getNewestPosts(db)
+			.then(posts => {
+				if (!posts) {
+					return res
+						.state(401)
+						.json({ error: 'Something went wrong when retriving posts' });
+				}
+				return res.status(200).json(posts);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
 	.get('/posts', (req, res, next) => {
 		const db = req.app.get('db');
 		ForumService.getAllMessageBoardPosts(db)

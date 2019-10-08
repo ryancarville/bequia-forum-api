@@ -4,7 +4,7 @@ const JobsService = require('./jobs-service');
 const jobsRouter = express.Router();
 
 jobsRouter
-	.get('/jobCats', (req, res, next) => {
+	.get('/catagories', (req, res, next) => {
 		const db = req.app.get('db');
 		JobsService.getAllJobCats(db)
 			.then(jobCats => {

@@ -2,10 +2,13 @@ const xss = require('xss');
 
 const JobsService = {
 	getAllJobCats(db) {
-		return db.select('*').from('bf_job_cats ');
+		return db.select('*').from('bf_job_cats');
 	},
 	getAllJobs(db) {
-		return db.select('*').from('bf_jobs');
+		return db
+			.from('bf_jobs')
+			.innerJoin('bf_users', 'bf_jobs.userid', '=', 'bf_users.id')
+			.orderBy('dateposted', 'desc');
 	},
 	getJobsInCat(db, catId) {
 		return db
