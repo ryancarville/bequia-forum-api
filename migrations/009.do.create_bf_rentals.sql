@@ -12,5 +12,6 @@ CREATE TABLE IF NOT EXISTS bf_rentals(
     airbnb TEXT,
     homeAway TEXT,
     bookingDOTcom TEXT,
-    otherSite TEXT
+    otherSite TEXT,
+    dateposted DATE DEFAULT now() NOT NULL
 )

@@ -8,5 +8,6 @@ CREATE TABLE IF NOT EXISTS bf_market_place(
     price TEXT,
     contactName TEXT,
     contactEmail TEXT, 
-    contactPhone TEXT
+    contactPhone TEXT,
+    dateposted DATE DEFAULT now() NOT NULL
 )

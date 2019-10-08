@@ -3,7 +3,7 @@ const MarketPlaceService = require('./marketPlace-service');
 const marketPlaceRouter = express.Router();
 
 marketPlaceRouter
-	.get('/', (req, res, next) => {
+	.get('/catagories', (req, res, next) => {
 		const db = req.app.get('db');
 		MarketPlaceService.getMarketPlaceCats(db)
 			.then(cats => {

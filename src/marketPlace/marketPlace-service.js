@@ -2,7 +2,7 @@ const xss = require('xss');
 
 const MarkerPlaceService = {
 	getMarketPlaceCats(db) {
-		db.select('*').from('bf_market_place_cats');
+		return db.select('*').from('bf_market_place_cats');
 	},
 	getAllListings(db) {
 		return db.select('*').from('bf_market_place');
