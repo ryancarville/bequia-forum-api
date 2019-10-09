@@ -2,42 +2,42 @@ const xss = require('xss');
 
 const JobsService = {
 	getAllJobCats(db) {
-		return db.select('*').from('bf_job_cats');
+		return db.select('*').from('job_cats');
 	},
 	getAllJobs(db) {
 		return db
-			.from('bf_jobs')
-			.innerJoin('bf_users', 'bf_jobs.userid', '=', 'bf_users.id')
+			.from('jobs')
+			.innerJoin('users', 'jobs.userid', '=', 'users.id')
 			.orderBy('dateposted', 'desc');
 	},
 	getJobsInCat(db, catId) {
 		return db
 			.select('*')
-			.from('bf_jobs')
+			.from('jobs')
 			.where({ jobcat: catId });
 	},
 	getJobWithId(db, id) {
 		return db
-			.from('bf_jobs')
+			.from('jobs')
 			.where({ id })
 			.first();
 	},
 	insertJob(db, newJob) {
 		return db
-			.into('bf_jobs')
+			.into('jobs')
 			.insert(newJob)
 			.returning('*')
 			.then(rows => rows[0]);
 	},
 	updateJob(db, updatedJod) {
 		return db
-			.from('bf_jobs')
+			.from('jobs')
 			.where({ id: updatedJod.id })
 			.update(updatedJod);
 	},
 	deleteJob(db, id) {
 		return db
-			.from('bf_jobs')
+			.from('jobs')
 			.where({ id })
 			.delete();
 	},

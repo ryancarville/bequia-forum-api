@@ -2,39 +2,39 @@ const xss = require('xss');
 
 const MarkerPlaceService = {
 	getMarketPlaceCats(db) {
-		return db.select('*').from('bf_market_place_cats');
+		return db.select('*').from('market_place_cats');
 	},
 	getAllListings(db) {
-		return db.select('*').from('bf_market_place');
+		return db.select('*').from('market_place');
 	},
 	getAllListingsInCat(db, marketplacecat) {
 		return db
 			.select('*')
-			.from('bf_market_place')
+			.from('market_place')
 			.where({ marketplacecat });
 	},
 	getListingById(db, id) {
 		return db
-			.from('bf_market_place')
+			.from('market_place')
 			.where({ id })
 			.first();
 	},
 	insertListing(db, newListing) {
 		return db
-			.into('bf_market_place')
+			.into('market_place')
 			.insert(newListing)
 			.returning('*')
 			.then(rows => rows[0]);
 	},
 	updateListing(db, updatedListing) {
 		return db
-			.into('bf_market_place')
+			.into('market_place')
 			.where({ id: updatedListing.id })
 			.update(updatedListing);
 	},
 	deleteListing(db, id) {
 		return db
-			.from('bf_market_place')
+			.from('market_place')
 			.where({ id })
 			.delete();
 	},

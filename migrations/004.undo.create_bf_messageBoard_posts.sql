@@ -1,1 +1,0 @@
-DROP TABLE IF EXISTS bf_messageBoard_posts;

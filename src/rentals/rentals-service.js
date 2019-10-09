@@ -2,36 +2,36 @@ const xss = require('xss');
 
 const RentalsService = {
 	getRentalCats(db) {
-		return db.select('*').from('bf_rental_cats');
+		return db.select('*').from('rental_cats');
 	},
 	getAllRentalListings(db) {
-		return db.select('*').from('bf_rentals');
+		return db.select('*').from('rentals');
 	},
 	getAllListingsForCat(db, rentalcat) {
-		return db.from('bf_rentals').where({ rentalcat });
+		return db.from('rentals').where({ rentalcat });
 	},
 	getListingById(db, id) {
 		return db
-			.from('bf_rentals')
+			.from('rentals')
 			.where({ id })
 			.first();
 	},
 	insertListing(db, newListing) {
 		return db
-			.into('bf_rentals')
+			.into('rentals')
 			.insert(newListing)
 			.returing('*')
 			.then(rows => rows[0]);
 	},
 	updateListing(db, updatedListing) {
 		return db
-			.into('bf_rentals')
+			.into('rentals')
 			.where({ id: updatedListing.id })
 			.update(updatedListing);
 	},
 	deleteListing(db, id) {
 		return db
-			.from('bf_rentals')
+			.from('rentals')
 			.where({ id })
 			.delete();
 	},

@@ -1,54 +1,64 @@
 const xss = require('xss');
-
+const knex = require('knex');
 const ForumService = {
 	getMessageBoardSections(db) {
-		return db.select('*').from('bf_messageboard_sections');
+		return db.select('*').from('messageboard_sections');
 	},
 	getAllMessageBoards(db) {
-		return db.from('bf_messageboards');
+		return db.from('messageboards');
 	},
 	getAllMessageBoardPosts(db) {
 		return db
-			.table('bf_messageboard_posts')
-			.innerJoin('bf_users', 'bf_messageboard_posts.userid', '=', 'bf_users.id')
-			.orderBy('date', 'desc');
+			.table('users')
+			.join('messageboard_posts', 'messageboard_posts.userid', '=', 'users.id')
+			.orderBy('dateposted', 'desc');
 	},
 	getNewestPosts(db) {
 		return db
-			.from('bf_messageboard_posts')
-			.orderBy('date', 'desc')
+			.from('messageboard_posts')
+			.orderBy('dateposted', 'desc')
 			.limit(8)
-			.innerJoin(
-				'bf_users',
-				'bf_messageboard_posts.userid',
-				'=',
-				'bf_users.id'
-			);
+			.innerJoin('users', 'messageboard_posts.userid', '=', 'users.id');
 	},
 	getSpecificBoardPosts(db, boardid) {
 		return db
-			.select('*')
-			.from('bf_messageboard_posts')
-			.where({ boardid });
+			.from('messageboard_posts')
+			.where({ boardid })
+			.join('messageboard_posts', 'messageboard_posts.userid', '=', 'users.id')
+			.orderBy('dateposted', 'desc');
 	},
 	insertPost(db, newPost) {
 		return db
-			.into('bf_messageboard_posts')
+			.into('messageboard_posts')
 			.insert(newPost)
 			.returning('*')
 			.then(rows => rows[0]);
 	},
 	updatePost(db, updatedPost) {
 		return db
-			.into('bf_messagebaord_posts')
+			.into('messagebaord_posts')
 			.where({ id: updatedPost.id })
 			.update(updatedPost);
 	},
 	deletePost(db, id) {
 		return db
-			.from('bf_messageboard_posts')
+			.from('messageboard_posts')
 			.where({ id })
 			.delete();
+	},
+	addLike(db, id) {
+		return db('messageboard_posts')
+			.where({ id })
+			.increment('likes', '1')
+			.returning('*')
+			.then(rows => rows[0]);
+	},
+	subtractLike(db, id) {
+		return db('messageboard_posts')
+			.where({ id })
+			.decrement('likes', '1')
+			.returning('*')
+			.then(rows => rows[0]);
 	},
 	serializePost(newPost) {
 		return {
@@ -57,7 +67,7 @@ const ForumService = {
 			userId: newPost.userId,
 			title: xss(newPost.title),
 			content: xss(newPost.content),
-			date: newPost.date,
+			dateposted: newPost.dateposted,
 			likes: newPost.likes
 		};
 	}

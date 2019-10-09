@@ -2,37 +2,37 @@ const xss = require('xss');
 
 const EventService = {
 	getALlEvents(db) {
-		return db.select('*').from('bf_events');
+		return db.select('*').from('events');
 	},
 	getEventById(db, id) {
 		return db
-			.from('bf_events')
+			.from('events')
 			.where({ id })
 			.first();
 	},
 	insertEvent(db, newEvent) {
 		return db
-			.into('bf_events')
+			.into('events')
 			.insert(newEvent)
 			.returning('*')
 			.then(rows => rows[0]);
 	},
 	updateEvent(db, updatedEvent) {
 		return db
-			.into('bf_events')
+			.into('events')
 			.where({ id: updatedEvent.id })
 			.update(updatedEvent);
 	},
 	deleteEvent(db, id) {
 		return db
-			.from('bf_events')
+			.from('events')
 			.where({ id })
 			.delete();
 	},
 	sortListings(db) {
 		return db
 			.select('*')
-			.from('bf_events')
+			.from('events')
 			.orderBy('title', 'asc');
 	},
 	serializeEvent(event) {

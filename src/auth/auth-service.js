@@ -4,7 +4,7 @@ const config = require('../config');
 
 const AuthService = {
 	getUserWithUsername(db, userName) {
-		return db('bequia-forum-users')
+		return db('users')
 			.where({ userName })
 			.first();
 	},

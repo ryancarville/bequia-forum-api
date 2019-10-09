@@ -5,7 +5,7 @@ const forumRouter = express.Router();
 const { requireAuth } = require('../middleware/jwt-auth');
 
 forumRouter
-	.get('/messageBoard-sections', (req, res, next) => {
+	.get('/catagories', (req, res, next) => {
 		const db = req.app.get('db');
 		ForumService.getMessageBoardSections(db)
 			.then(sections => {
@@ -87,7 +87,6 @@ forumRouter
 				next(err);
 			});
 	})
-	.all(requireAuth)
 	.post('/add-post', (req, res, next) => {
 		const db = req.app.get('db');
 		const { boardid, userid, title, content, date, likes } = req.body;
@@ -132,15 +131,54 @@ forumRouter
 				next(err);
 			});
 	})
-	.delete('/delete-post', (req, res, next) => {
+	.patch('/post-like/:postId/:like', (req, res, next) => {
 		const db = req.app.get('db');
-		const { postId } = req.body;
-		ForumService.deletePost(db, postId)
+		const { postId, like } = req.params;
+
+		console.log(like);
+		if (like === '+') {
+			ForumService.addLike(db, postId)
+				.then(post => {
+					console.log(post);
+					if (!post) {
+						return res
+							.status(401)
+							.json({ error: 'Could not add a like to the post.' });
+					}
+					return res.status(201).json(post);
+				})
+				.catch(err => {
+					console.log(err);
+					next(err);
+				});
+		}
+		if (like === '-') {
+			ForumService.subtractLike(db, postId)
+				.then(post => {
+					console.log(post);
+					if (!post) {
+						return res
+							.status(401)
+							.json({ error: 'Could not subtract a like from the post.' });
+					}
+					return res.status(201).json(post);
+				})
+				.catch(err => {
+					console.log(err);
+					next(err);
+				});
+		}
+	})
+	.delete('/posts/:postid', (req, res, next) => {
+		const db = req.app.get('db');
+		var { postid } = req.params;
+		postid = parseInt(postid);
+		ForumService.deletePost(db, postid)
 			.then(rowAffected => {
 				if (!rowAffected) {
 					return res.status(401).json({ error: `Post doesn't exsist.` });
 				}
-				res.status(200).json(rowAffected);
+				res.status(201).json(rowAffected);
 			})
 			.catch(err => {
 				console.log(err);
