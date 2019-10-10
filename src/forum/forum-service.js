@@ -15,6 +15,15 @@ const ForumService = {
 	},
 	getNewestPosts(db) {
 		return db
+			.select(
+				'messageboard_posts.id',
+				'messageboard_posts.boardid',
+				'messageboard_posts.title',
+				'messageboard_posts.content',
+				'messageboard_posts.dateposted',
+				'messageboard_posts.likes',
+				'users.username'
+			)
 			.from('messageboard_posts')
 			.orderBy('dateposted', 'desc')
 			.limit(8)

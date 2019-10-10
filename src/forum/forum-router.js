@@ -87,11 +87,11 @@ forumRouter
 				next(err);
 			});
 	})
-	.post('/add-post', (req, res, next) => {
+	.post('/addPost', (req, res, next) => {
 		const db = req.app.get('db');
-		const { boardid, userid, title, content, date, likes } = req.body;
-		const newPost = { boardid, userid, title, content, date, likes };
-		for (const feild of ['boardid', 'userid', 'title', 'content', 'date'])
+		const { boardid, userid, title, content, dateposted, likes } = req.body;
+		const newPost = { boardid, userid, title, content, dateposted, likes };
+		for (const feild of ['boardid', 'userid', 'title', 'content', 'dateposted'])
 			if (!req.body[feild]) {
 				return res
 					.status(401)
