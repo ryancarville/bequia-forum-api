@@ -79,12 +79,11 @@ rentalRouter
 			location,
 			price,
 			contactname,
-			contact,
-			email,
+			contactemail,
 			contactphone,
 			airbnb,
 			homeaway,
-			bookingdotcome,
+			bookingdotcom,
 			othersite
 		} = req.body;
 		const newListing = {
@@ -95,12 +94,11 @@ rentalRouter
 			location,
 			price,
 			contactname,
-			contact,
-			email,
+			contactemail,
 			contactphone,
 			airbnb,
 			homeaway,
-			bookingdotcome,
+			bookingdotcom,
 			othersite
 		};
 		for (const feild of [
@@ -131,9 +129,10 @@ rentalRouter
 				next(err);
 			});
 	})
-	.patch('/edit/:listingId', (req, res, next) => {
+	.patch('/edit', (req, res, next) => {
 		const db = req.app.get('db');
 		const {
+			id,
 			userid,
 			rentalcat,
 			title,
@@ -150,6 +149,7 @@ rentalRouter
 			othersite
 		} = req.body;
 		const listingToUpdate = {
+			id,
 			userid,
 			rentalcat,
 			title,
@@ -194,7 +194,7 @@ rentalRouter
 						.status(401)
 						.json({ error: 'No listing with that id exists.' });
 				}
-				return res.status(204).json(rowAffected);
+				return res.status(201).json(rowAffected);
 			})
 			.catch(err => {
 				console.log(err);

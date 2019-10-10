@@ -5,7 +5,10 @@ const RentalsService = {
 		return db.select('*').from('rental_cats');
 	},
 	getAllRentalListings(db) {
-		return db.select('*').from('rentals');
+		return db
+			.select('*')
+			.from('rentals')
+			.orderBy('dateposted', 'desc');
 	},
 	getAllListingsForCat(db, rentalcat) {
 		return db.from('rentals').where({ rentalcat });
@@ -20,7 +23,7 @@ const RentalsService = {
 		return db
 			.into('rentals')
 			.insert(newListing)
-			.returing('*')
+			.returning('*')
 			.then(rows => rows[0]);
 	},
 	updateListing(db, updatedListing) {

@@ -6,8 +6,8 @@ const JobsService = {
 	},
 	getAllJobs(db) {
 		return db
+			.select('*')
 			.from('jobs')
-			.innerJoin('users', 'jobs.userid', '=', 'users.id')
 			.orderBy('dateposted', 'desc');
 	},
 	getJobsInCat(db, catId) {

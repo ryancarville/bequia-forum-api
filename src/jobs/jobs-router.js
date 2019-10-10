@@ -56,20 +56,28 @@ jobsRouter
 	.post('/addJob', (req, res, next) => {
 		const db = req.app.get('db');
 		const {
-			jobcat,
 			userid,
+			jobcat,
 			title,
-			description,
 			location,
+			description,
+			contactname,
+			contactemail,
+			website,
+			contactphone,
 			employment,
 			dateposted
 		} = req.body;
 		const newJob = {
-			jobcat,
 			userid,
+			jobcat,
 			title,
-			description,
 			location,
+			description,
+			contactname,
+			contactemail,
+			website,
+			contactphone,
 			employment,
 			dateposted
 		};
@@ -106,14 +114,33 @@ jobsRouter
 	})
 	.patch('/edit', (req, res, next) => {
 		const db = req.app.get('db');
-		const { id, jobcat, title, description, location, employment } = req.body;
-		const jobToUpdate = {
+		const {
 			id,
+			userid,
 			jobcat,
 			title,
-			description,
 			location,
-			employment
+			description,
+			contactname,
+			contactemail,
+			website,
+			contactphone,
+			employment,
+			dateposted
+		} = req.body;
+		const jobToUpdate = {
+			id,
+			userid,
+			jobcat,
+			title,
+			location,
+			description,
+			contactname,
+			contactemail,
+			website,
+			contactphone,
+			employment,
+			dateposted
 		};
 		const numOfValues = Object.entries(jobToUpdate).filter(Boolean).length;
 		if (numOfValues === 0) {
@@ -127,7 +154,7 @@ jobsRouter
 				if (!numRowsAffected) {
 					return res.status(401).json({ error: 'Could not update jobs.' });
 				}
-				return res.status(204).json(numRowsAffected);
+				return res.status(201).json(numRowsAffected);
 			})
 			.catch(err => {
 				console.log(err);
@@ -142,7 +169,7 @@ jobsRouter
 				if (!rowAffected) {
 					return res.status(401).json({ error: 'No job with that id exists.' });
 				}
-				return res.status(204).json(rowAffected);
+				return res.status(201).json(rowAffected);
 			})
 			.catch(err => {
 				console.log(err);

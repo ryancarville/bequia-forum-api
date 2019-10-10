@@ -48,24 +48,25 @@ eventsRouter
 	.post('/addEvent', (req, res, next) => {
 		const db = req.app.get('db');
 		const {
-			userid,
 			title,
-			description,
 			location,
 			eventdate,
 			eventtime,
+			description,
+			userid,
 			dateposted
 		} = req.body;
 		const newEvent = {
-			userid,
 			title,
-			description,
 			location,
 			eventdate,
 			eventtime,
+			description,
+			userid,
 			dateposted
 		};
 		for (const feild of [
+			'userid',
 			'title',
 			'description',
 			'location',
@@ -96,14 +97,14 @@ eventsRouter
 	.patch('/edit', (req, res, next) => {
 		const db = req.app.get('db');
 
-		const { id, title, description, location, eventDate, eventTime } = req.body;
+		const { id, title, description, location, eventdate, eventtime } = req.body;
 		const eventToUpdate = {
 			id,
 			title,
 			description,
 			location,
-			eventDate,
-			eventTime
+			eventdate,
+			eventtime
 		};
 		const numOfValues = Object.entries(eventToUpdate).filter(Boolean).length;
 		if (numOfValues === 0) {
@@ -117,14 +118,14 @@ eventsRouter
 				if (!numRowsAffected) {
 					return res.status(401).json({ error: `Could not update event` });
 				}
-				return res.status(204).json(numRowsAffected);
+				return res.status(201).json(numRowsAffected);
 			})
 			.catch(err => {
 				console.log(err);
 				next(err);
 			});
 	})
-	.delete('/delete-event/:eventId', (req, res, next) => {
+	.delete('/delete/:eventId', (req, res, next) => {
 		const db = req.app.get('db');
 		const { eventId } = req.params;
 		EventsService.deleteEvent(db, eventId)
@@ -134,7 +135,7 @@ eventsRouter
 						.status(401)
 						.json({ error: 'No event with that id exists.' });
 				}
-				return res.status(204).json(rowAffected);
+				return res.status(201).json(rowAffected);
 			})
 			.catch(err => {
 				console.log(err);

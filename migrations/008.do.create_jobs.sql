@@ -6,5 +6,9 @@ CREATE TABLE IF NOT EXISTS jobs(
     description TEXT NOT NULL,
     employment TEXT,
     location TEXT,
+    contactname TEXT,
+    contactemail TEXT,
+    contactphone TEXT,
+    website TEXT,
     datePosted TEXT NOT NULL
 )
