@@ -2,9 +2,9 @@ const DirectoryService = {
 	getAllListings(db) {
 		return db
 			.select(
-				'directory.userid',
-				'users.firstname',
-				'users.lastname',
+				'directory.user_id',
+				'users.first_name',
+				'users.last_name',
 				'users.address',
 				'users.city',
 				'users.country',
@@ -13,8 +13,8 @@ const DirectoryService = {
 				'users.website'
 			)
 			.from('directory')
-			.innerJoin('users', 'directory.userid', '=', 'users.id')
-			.orderBy('users.lastname', 'asc');
+			.innerJoin('users', 'directory.user_id', '=', 'users.id')
+			.orderBy('users.last_name', 'asc');
 	},
 	insertUser(db, newUser) {
 		return db
@@ -22,12 +22,12 @@ const DirectoryService = {
 			.insert(newUser)
 			.returning('*')
 			.then(rows => rows[0])
-			.innerJoin('users', 'directory.userid', '=', 'users.id');
+			.innerJoin('users', 'directory.user_id', '=', 'users.id');
 	},
-	deletedUser(db, userid) {
+	deletedUser(db, user_id) {
 		return db
 			.from('directory')
-			.where({ userid })
+			.where({ user_id })
 			.delete();
 	}
 };

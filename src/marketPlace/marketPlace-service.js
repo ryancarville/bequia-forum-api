@@ -8,7 +8,7 @@ const MarkerPlaceService = {
 		return db
 			.select('*')
 			.from('market_place')
-			.orderBy('dateposted', 'desc');
+			.orderBy('date_posted', 'desc');
 	},
 	getAllListingsInCat(db, marketplacecat) {
 		return db
@@ -44,16 +44,16 @@ const MarkerPlaceService = {
 	serializeListing(listing) {
 		return {
 			id: listing.id,
-			userid: listing.userid,
-			marketplacecat: listing.marketplacecat,
+			userid: listing.user_id,
+			marketplacecat: listing.market_place_cat,
 			title: xss(listing.title),
 			description: xss(listing.description),
 			price: xss(listing.price),
 			location: xss(listing.location),
-			contactname: xss(listing.contactname),
-			contactemail: xss(listing.contactemail),
-			contactphone: xss(listing.contactphone),
-			dateposted: listing.dateposted
+			contactname: xss(listing.contact_name),
+			contactemail: xss(listing.contact_email),
+			contactphone: xss(listing.contact_phone),
+			dateposted: listing.date_posted
 		};
 	}
 };

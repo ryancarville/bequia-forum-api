@@ -19,13 +19,13 @@ directoryRouter
 				next(err);
 			});
 	})
-	.post('/addUser/:userId', (req, res, next) => {
+	.post('/addUser/:user_id', (req, res, next) => {
 		const db = req.app.get('db');
-		const { userId } = req.params;
+		const { user_id } = req.params;
 		if (!userId) {
 			return res.status(401).json({ error: 'Request mus contain user id.' });
 		}
-		DirectoryService.insertUser(db, userId)
+		DirectoryService.insertUser(db, user_id)
 			.then(listing => {
 				if (!listing) {
 					return res
@@ -39,13 +39,13 @@ directoryRouter
 				next(err);
 			});
 	})
-	.delete('/delete/:userId', (req, res, next) => {
+	.delete('/delete/:user_id', (req, res, next) => {
 		const db = req.app.get('db');
-		const { userId } = req.params;
+		const { user_id } = req.params;
 		if (!userId) {
 			return res.status(401).json({ error: 'Request mus contain user id.' });
 		}
-		DirectoryService.deletedUser(db, userId)
+		DirectoryService.deletedUser(db, user_id)
 			.then(rowAffected => {
 				if (!rowAffected) {
 					return res

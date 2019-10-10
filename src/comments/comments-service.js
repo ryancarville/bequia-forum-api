@@ -4,17 +4,17 @@ const CommentsService = {
 		return db
 			.select(
 				'comments.id',
-				'comments.userid',
-				'comments.postid',
+				'comments.user_id',
+				'comments.post_id',
 				'comments.content',
-				'comments.dateposted',
-				'users.firstname',
-				'users.lastname',
-				'users.username'
+				'comments.date_posted',
+				'users.first_name',
+				'users.last_name',
+				'users.user_name'
 			)
 			.from('comments')
-			.innerJoin('users', 'comments.userid', '=', 'users.id')
-			.orderBy('comments.dateposted', 'desc');
+			.innerJoin('users', 'comments.user_id', '=', 'users.id')
+			.orderBy('comments.date_posted', 'desc');
 	},
 	insertComment(db, newComment) {
 		return db
@@ -31,10 +31,10 @@ const CommentsService = {
 	serializeComment(comment) {
 		return {
 			id: comment.id,
-			postid: comment.postid,
-			userid: comment.userid,
+			postid: comment.post_id,
+			userid: comment.user_id,
 			content: xss(comment.content),
-			dateposted: comment.dateposted
+			dateposted: comment.date_posted
 		};
 	}
 };

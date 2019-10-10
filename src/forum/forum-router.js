@@ -70,10 +70,10 @@ forumRouter
 				next(err);
 			});
 	})
-	.get('/get-posts-for/:boardId', (req, res, next) => {
+	.get('/get-posts-for/:board_id', (req, res, next) => {
 		const db = req.app.get('db');
-		const { boardId } = req.params;
-		ForumService.getSpecificBoardPosts(db, boardId)
+		const { board_id } = req.params;
+		ForumService.getSpecificBoardPosts(db, board_id)
 			.then(posts => {
 				if (!posts) {
 					return res
@@ -89,9 +89,15 @@ forumRouter
 	})
 	.post('/addPost', (req, res, next) => {
 		const db = req.app.get('db');
-		const { boardid, userid, title, content, dateposted, likes } = req.body;
-		const newPost = { boardid, userid, title, content, dateposted, likes };
-		for (const feild of ['boardid', 'userid', 'title', 'content', 'dateposted'])
+		const { board_id, user_id, title, content, date_posted, likes } = req.body;
+		const newPost = { board_id, user_id, title, content, date_posted, likes };
+		for (const feild of [
+			'board_id',
+			'user_id',
+			'title',
+			'content',
+			'date_posted'
+		])
 			if (!req.body[feild]) {
 				return res
 					.status(401)
@@ -105,7 +111,7 @@ forumRouter
 				return res
 					.status(201)
 					.location(
-						path.posix.join('/messageBoard', `/${post.boardid}`, `/${post.id}`)
+						path.posix.join('/messageBoard', `/${post.board_id}`, `/${post.id}`)
 					)
 					.json(ForumService.serializePost(post));
 			})
@@ -116,8 +122,8 @@ forumRouter
 	})
 	.patch('/edit', (req, res, next) => {
 		const db = req.app.get('db');
-		const { id, boardid, title, content } = req.body;
-		const postToUpdate = { id, boardid, title, content };
+		const { id, board_id, title, content } = req.body;
+		const postToUpdate = { id, board_id, title, content };
 		const numOfValues = Object.entries(postToUpdate).filter(Boolean).length;
 		if (numOfValues === 0) {
 			return res.status(401).json({
@@ -136,15 +142,12 @@ forumRouter
 				next(err);
 			});
 	})
-	.patch('/post-like/:postId/:like', (req, res, next) => {
+	.patch('/post-like/:post_id/:like', (req, res, next) => {
 		const db = req.app.get('db');
-		const { postId, like } = req.params;
-
-		console.log(like);
+		const { post_id, like } = req.params;
 		if (like === '+') {
-			ForumService.addLike(db, postId)
+			ForumService.addLike(db, post_id)
 				.then(post => {
-					console.log(post);
 					if (!post) {
 						return res
 							.status(401)
@@ -158,9 +161,8 @@ forumRouter
 				});
 		}
 		if (like === '-') {
-			ForumService.subtractLike(db, postId)
+			ForumService.subtractLike(db, post_id)
 				.then(post => {
-					console.log(post);
 					if (!post) {
 						return res
 							.status(401)
@@ -174,11 +176,11 @@ forumRouter
 				});
 		}
 	})
-	.delete('/posts/:postid', (req, res, next) => {
+	.delete('/posts/:post_id', (req, res, next) => {
 		const db = req.app.get('db');
-		var { postid } = req.params;
-		postid = parseInt(postid);
-		ForumService.deletePost(db, postid)
+		var { post_id } = req.params;
+		postid = parseInt(post_id);
+		ForumService.deletePost(db, post_id)
 			.then(rowAffected => {
 				if (!rowAffected) {
 					return res.status(401).json({ error: `Post doesn't exsist.` });

@@ -52,10 +52,10 @@ marketPlaceRouter
 				next(err);
 			});
 	})
-	.get('/listings/:listingId', (req, res, next) => {
+	.get('/listings/:id', (req, res, next) => {
 		const db = req.app.get('db');
-		const { listingId } = req.params;
-		MarketPlaceService.getListingById(db, listingId)
+		const { id } = req.params;
+		MarketPlaceService.getListingById(db, id)
 			.then(listing => {
 				if (!listing) {
 					return res.status(401).json({
@@ -72,34 +72,34 @@ marketPlaceRouter
 	.post('/addListing', (req, res, next) => {
 		const db = req.app.get('db');
 		const {
-			marketplacecat,
-			userid,
+			market_place_cat,
+			user_id,
 			title,
 			description,
 			location,
 			price,
-			contactname,
-			contactemail,
-			contactphone
+			contact_name,
+			contact_email,
+			contact_phone
 		} = req.body;
 		const newListing = {
-			marketplacecat,
-			userid,
+			market_place_cat,
+			user_id,
 			title,
 			description,
 			location,
 			price,
-			contactname,
-			contactemail,
-			contactphone
+			contact_name,
+			contact_email,
+			contact_phone
 		};
 		for (const feild of [
-			'marketplacecat',
-			'userid',
+			'market_place_cat',
+			'user_id',
 			'title',
 			'description',
-			'contactname',
-			'contactemail'
+			'contact_name',
+			'contact_email'
 		])
 			if (!req.body[feild]) {
 				return res
@@ -126,25 +126,25 @@ marketPlaceRouter
 		const db = req.app.get('db');
 		const {
 			id,
-			marketplacecat,
+			market_place_cat,
 			title,
 			description,
 			location,
 			price,
-			contactname,
-			contactemail,
-			contactphone
+			contact_name,
+			contact_email,
+			contact_phone
 		} = req.body;
 		const listingToUpdate = {
 			id,
-			marketplacecat,
+			market_place_cat,
 			title,
 			description,
 			location,
 			price,
-			contactname,
-			contactemail,
-			contactphone
+			contact_name,
+			contact_email,
+			contact_phone
 		};
 		const numOfValues = Object.entries(listingToUpdate).filter(Boolean).length;
 		if (numOfValues === 0) {
@@ -165,10 +165,10 @@ marketPlaceRouter
 				next(err);
 			});
 	})
-	.delete('/delete/:listingId', (req, res, next) => {
+	.delete('/delete/:id', (req, res, next) => {
 		const db = req.app.get('db');
-		const { listingId } = req.params;
-		MarketPlaceService.deleteListing(db, listingId)
+		const { id } = req.params;
+		MarketPlaceService.deleteListing(db, id)
 			.then(rowAffected => {
 				if (!rowAffected) {
 					return res

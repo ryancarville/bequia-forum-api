@@ -11,41 +11,41 @@ const ForumService = {
 		return db
 			.select(
 				'messageboard_posts.id',
-				'messageboard_posts.userid',
-				'messageboard_posts.boardid',
+				'messageboard_posts.user_id',
+				'messageboard_posts.board_id',
 				'messageboard_posts.title',
 				'messageboard_posts.content',
-				'messageboard_posts.dateposted',
+				'messageboard_posts.date_posted',
 				'messageboard_posts.likes',
-				'users.username',
+				'users.user_name'
 			)
 			.from('messageboard_posts')
-			.orderBy('dateposted', 'desc')
-			.innerJoin('users', 'messageboard_posts.userid', '=', 'users.id');
+			.orderBy('date_posted', 'desc')
+			.innerJoin('users', 'messageboard_posts.user_id', '=', 'users.id');
 	},
 	getNewestPosts(db) {
 		return db
 			.select(
 				'messageboard_posts.id',
-				'messageboard_posts.userid',
-				'messageboard_posts.boardid',
+				'messageboard_posts.user_id',
+				'messageboard_posts.board_id',
 				'messageboard_posts.title',
 				'messageboard_posts.content',
-				'messageboard_posts.dateposted',
+				'messageboard_posts.date_posted',
 				'messageboard_posts.likes',
-				'users.username'
+				'users.user_name'
 			)
 			.from('messageboard_posts')
-			.orderBy('dateposted', 'desc')
+			.orderBy('date_posted', 'desc')
 			.limit(8)
-			.innerJoin('users', 'messageboard_posts.userid', '=', 'users.id');
+			.innerJoin('users', 'messageboard_posts.user_id', '=', 'users.id');
 	},
-	getSpecificBoardPosts(db, boardid) {
+	getSpecificBoardPosts(db, board_id) {
 		return db
 			.from('messageboard_posts')
-			.where({ boardid })
-			.join('messageboard_posts', 'messageboard_posts.userid', '=', 'users.id')
-			.orderBy('dateposted', 'desc');
+			.where({ board_id })
+			.join('messageboard_posts', 'messageboard_posts.user_id', '=', 'users.id')
+			.orderBy('date_posted', 'desc');
 	},
 	insertPost(db, newPost) {
 		return db
@@ -83,11 +83,11 @@ const ForumService = {
 	serializePost(newPost) {
 		return {
 			id: newPost.id,
-			boardId: newPost.boardId,
-			userId: newPost.userId,
+			boardId: newPost.board_id,
+			userId: newPost.user_id,
 			title: xss(newPost.title),
 			content: xss(newPost.content),
-			dateposted: newPost.dateposted,
+			dateposted: newPost.date_posted,
 			likes: newPost.likes
 		};
 	}

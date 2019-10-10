@@ -4,12 +4,12 @@ const signUpRouter = express.Router();
 
 signUpRouter.post('/', (req, res, next) => {
 	const db = req.app.get('db');
-	const { firstName, lastName, email, userName, password } = req.body;
+	const { first_name, last_name, email, user_name, password } = req.body;
 	for (const feild of [
-		'firstName',
-		'lastName',
+		'first_name',
+		'last_name',
 		'email',
-		'userName',
+		'user_name',
 		'password'
 	])
 		if (!req.body[feild]) {
@@ -29,10 +29,10 @@ signUpRouter.post('/', (req, res, next) => {
 			}
 			return SignUpService.hashPassword(password).then(hashedPassword => {
 				const newUser = {
-					firstName,
-					lastName,
+					first_name,
+					last_name,
 					email,
-					userName,
+					user_name,
 					password: hashedPassword,
 					dateCreated: 'now()'
 				};

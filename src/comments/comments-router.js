@@ -21,9 +21,9 @@ commentsRouter
 	})
 	.post('/addComment', (req, res, next) => {
 		const db = req.app.get('db');
-		const { userid, content, dateposted, postid } = req.body;
-		const newComment = { userid, content, dateposted, postid };
-		for (const feild of ['userid', 'content', 'postid', 'dateposted'])
+		const { user_id, content, date_posted, post_id } = req.body;
+		const newComment = { user_id, content, date_posted, post_id };
+		for (const feild of ['user_id', 'content', 'post_id', 'date_posted'])
 			if (!req.body[feild]) {
 				return res
 					.status(401)

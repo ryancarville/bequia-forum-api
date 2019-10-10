@@ -35,10 +35,10 @@ rentalRouter
 				next(err);
 			});
 	})
-	.get('/catagory/:rentalType', (req, res, next) => {
+	.get('/catagory/:id', (req, res, next) => {
 		const db = req.app.get('db');
-		const { rentalType } = req.params;
-		RentalsService.getAllListingsForCat(db, rentalType)
+		const { id } = req.params;
+		RentalsService.getAllListingsForCat(db, id)
 			.then(listings => {
 				if (!listings) {
 					return res.status(401).json({
@@ -52,10 +52,10 @@ rentalRouter
 				next(err);
 			});
 	})
-	.get('/listings/:listingId', (req, res, next) => {
+	.get('/listings/:id', (req, res, next) => {
 		const db = req.app.get('db');
-		const { listingId } = req.params;
-		RentalsService.getListingById(db, listingId)
+		const { id } = req.params;
+		RentalsService.getListingById(db, id)
 			.then(listing => {
 				if (!listing) {
 					return res
@@ -72,43 +72,43 @@ rentalRouter
 	.post('/addListing', (req, res, next) => {
 		const db = req.app.get('db');
 		const {
-			userid,
-			rentalcat,
+			user_id,
+			rental_cat,
 			title,
 			description,
 			location,
 			price,
-			contactname,
-			contactemail,
-			contactphone,
+			contact_name,
+			contact_email,
+			contact_phone,
 			airbnb,
 			homeaway,
-			bookingdotcom,
-			othersite
+			booking_dot_com,
+			other_site
 		} = req.body;
 		const newListing = {
-			userid,
-			rentalcat,
+			user_id,
+			rental_cat,
 			title,
 			description,
 			location,
 			price,
-			contactname,
-			contactemail,
-			contactphone,
+			contact_name,
+			contact_email,
+			contact_phone,
 			airbnb,
 			homeaway,
-			bookingdotcom,
-			othersite
+			booking_dot_com,
+			other_site
 		};
 		for (const feild of [
-			'userid',
-			'rentalcat',
+			'user_id',
+			'rental_cat',
 			'title',
 			'description',
 			'location',
-			'contactname',
-			'contactemail'
+			'contact_name',
+			'contact_email'
 		])
 			if (!req.body[feild]) {
 				return res
@@ -133,36 +133,36 @@ rentalRouter
 		const db = req.app.get('db');
 		const {
 			id,
-			userid,
-			rentalcat,
+			user_id,
+			rental_cat,
 			title,
 			description,
 			location,
 			price,
-			contactname,
+			contact_name,
 			contact,
 			email,
-			contactphone,
+			contact_phone,
 			airbnb,
 			homeaway,
-			bookingdotcome,
+			booking_dot_com,
 			othersite
 		} = req.body;
 		const listingToUpdate = {
 			id,
-			userid,
-			rentalcat,
+			user_id,
+			rental_cat,
 			title,
 			description,
 			location,
 			price,
-			contactname,
+			contact_name,
 			contact,
 			email,
-			contactphone,
+			contact_phone,
 			airbnb,
 			homeaway,
-			bookingdotcome,
+			booking_dot_com,
 			othersite
 		};
 		const numOfValues = Object.entries(listingToUpdate).filter(Boolean).length;
@@ -184,10 +184,10 @@ rentalRouter
 				next(err);
 			});
 	})
-	.delete('/delete/:listingId', (req, res, next) => {
+	.delete('/delete/:id', (req, res, next) => {
 		const db = req.app.get('db');
-		const { listingId } = req.params;
-		RentalsService.deleteListing(db, listingId)
+		const { id } = req.params;
+		RentalsService.deleteListing(db, id)
 			.then(rowAffected => {
 				if (!rowAffected) {
 					return res

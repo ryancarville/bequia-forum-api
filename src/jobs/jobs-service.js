@@ -8,13 +8,13 @@ const JobsService = {
 		return db
 			.select('*')
 			.from('jobs')
-			.orderBy('dateposted', 'desc');
+			.orderBy('date_posted', 'desc');
 	},
 	getJobsInCat(db, catId) {
 		return db
 			.select('*')
 			.from('jobs')
-			.where({ jobcat: catId });
+			.where({ job_cat: catId });
 	},
 	getJobWithId(db, id) {
 		return db
@@ -29,11 +29,11 @@ const JobsService = {
 			.returning('*')
 			.then(rows => rows[0]);
 	},
-	updateJob(db, updatedJod) {
+	updateJob(db, updatedJob) {
 		return db
 			.from('jobs')
-			.where({ id: updatedJod.id })
-			.update(updatedJod);
+			.where({ id: updatedJob.id })
+			.update(updatedJob);
 	},
 	deleteJob(db, id) {
 		return db
@@ -44,13 +44,13 @@ const JobsService = {
 	serializeJob(job) {
 		return {
 			id: job.id,
-			jobCat: job.jobCat,
-			userid: job.userid,
+			jobCat: job.job_cat,
+			userid: job.user_id,
 			title: xss(job.title),
 			description: xss(job.description),
 			location: xss(job.location),
 			employment: job.employment,
-			dateposted: job.dateposted
+			dateposted: job.date_posted
 		};
 	}
 };

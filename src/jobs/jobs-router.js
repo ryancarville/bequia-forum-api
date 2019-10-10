@@ -36,9 +36,9 @@ jobsRouter
 				next(err);
 			});
 	})
-	.get('/listings/:listingId', (req, res, next) => {
+	.get('/listings/:id', (req, res, next) => {
 		const db = req.app.get('db');
-		const id = req.params.listingId;
+		const { id } = req.params;
 		JobsService.getJobWithId(db, id)
 			.then(job => {
 				if (!job) {
@@ -56,39 +56,39 @@ jobsRouter
 	.post('/addJob', (req, res, next) => {
 		const db = req.app.get('db');
 		const {
-			userid,
-			jobcat,
+			user_id,
+			job_cat,
 			title,
 			location,
 			description,
-			contactname,
-			contactemail,
+			contact_name,
+			contact_email,
 			website,
-			contactphone,
+			contact_phone,
 			employment,
-			dateposted
+			date_posted
 		} = req.body;
 		const newJob = {
-			userid,
-			jobcat,
+			user_id,
+			job_cat,
 			title,
 			location,
 			description,
-			contactname,
-			contactemail,
+			contact_name,
+			contact_email,
 			website,
-			contactphone,
+			contact_phone,
 			employment,
-			dateposted
+			date_posted
 		};
 		for (const feild of [
-			'jobcat',
-			'userid',
+			'job_cat',
+			'user_id',
 			'title',
 			'description',
 			'location',
 			'employment',
-			'dateposted'
+			'date_posted'
 		])
 			if (!req.body[feild]) {
 				return res
@@ -116,31 +116,31 @@ jobsRouter
 		const db = req.app.get('db');
 		const {
 			id,
-			userid,
-			jobcat,
+			user_id,
+			job_cat,
 			title,
 			location,
 			description,
-			contactname,
-			contactemail,
+			contact_name,
+			contact_email,
 			website,
-			contactphone,
+			contact_phone,
 			employment,
-			dateposted
+			date_posted
 		} = req.body;
 		const jobToUpdate = {
 			id,
-			userid,
-			jobcat,
+			user_id,
+			job_cat,
 			title,
 			location,
 			description,
-			contactname,
-			contactemail,
+			contact_name,
+			contact_email,
 			website,
-			contactphone,
+			contact_phone,
 			employment,
-			dateposted
+			date_posted
 		};
 		const numOfValues = Object.entries(jobToUpdate).filter(Boolean).length;
 		if (numOfValues === 0) {
@@ -161,9 +161,9 @@ jobsRouter
 				next(err);
 			});
 	})
-	.delete('/delete/:jobId', (req, res, next) => {
+	.delete('/delete/:id', (req, res, next) => {
 		const db = req.app.get('db');
-		const id = req.params.jobId;
+		const { id } = req.params;
 		JobsService.deleteJob(db, id)
 			.then(rowAffected => {
 				if (!rowAffected) {

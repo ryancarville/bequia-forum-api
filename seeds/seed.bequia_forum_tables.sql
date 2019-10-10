@@ -16,7 +16,7 @@ directory
 RESTART IDENTITY CASCADE;
 
 INSERT INTO users
-    (address, city, country, phone, website, firstName, lastName, email, userName, password)
+    (address, city, country, phone, website, first_name, last_name, email, user_name, password)
 VALUES
     ('Chamua 6', 'Hunenberg', 'Switzerland', '+41791562329', 'https://www.beardystudios.com', 'Ryan', 'Carville', 'ryancarville@gmail.com', 'ryancarville', '$2y$12$s1uCWpyP3XerxdDlSIeDHOewEkZpXbc8iSk/5CitGklc18SmkNKj.'),
     (null, 'Bequia', 'Saint Vincent and The Grendines', null, null, 'Test', 'User', 'testUser@gmail.com', 'TestUser', '$2y$12$AKRE5tCKBkaa3wsye/Pw8.ESfNvS4mbZwtXSGswBfCxSWGVCy67SW');
@@ -35,7 +35,7 @@ VALUES
     ('Support');
 
 INSERT INTO messageboards
-    (messageBoardSection, name, description)
+    (messageboard_section, name, description)
 VALUES
     (1, 'Daily Life', 'Got something to say about life on Bequia? If it does not fit in any other area, then maybe it will fit here.  No ads in this section please.'),
     (1, 'Bequia News', 'Local current news and polotics. No ads in this section please.'),
@@ -70,7 +70,7 @@ VALUES
     (9, 'Support', 'Questions and information relating to the use of the forum');
 
 INSERT INTO messageboard_posts
-    (boardId, userId, title, content, dateposted, likes)
+    (board_id, user_id, title, content, date_posted, likes)
 VALUES  
     (1, 2, 'Life in paradise!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2019-07-13', 4),
     (4, 2, 'Another Post to fill out the site', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2019-09-29', 23),
@@ -89,7 +89,7 @@ VALUES
     (5, 2, 'Leaving for ever!', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', '2019-09-29', 92);
     
 INSERT INTO comments
-    (userid, postid, content)
+    (user_id, post_id, content)
 VALUES
     (1,3,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'),
     (1,2,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor'),
@@ -104,7 +104,7 @@ VALUES
     (1,8,'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor');
 
 INSERT INTO events
-    (userId, title, location, description, eventDate, eventTime, datePosted)
+    (user_id, title, location, description, event_date, event_time, date_posted)
 VALUES
     (1, 'Hairouns on the beach!', 'Lower Bay', 'Join us for beers and lobsters on lower bay. Family friendly.', '2019-10-23', '16:00 - 22:00', '2019-10-12'),
     (2, 'Almond Tree Sing-A-Long', 'Almond Tree - Harbour', 'Meet under the Almond Tree for a sing-a-long!', '2019-10-29', '18:00 - 20:00', '2019-10-02'),
@@ -121,7 +121,7 @@ VALUES
     ('Special Skills', 'Jobs that do not fall under any other catagory.');
 
 INSERT INTO jobs
-    (jobCat, userId, title, description, employment, location, datePosted)
+    (job_cat, user_id, title, description, employment, location, date_posted)
 VALUES
     (1, 1, 'Looking for a Great Bar Tender', 'Bequia Beach Hotel is looking for a Seasonal bar tender for this high season.  Great pay and schdules.', 'Seasonal', 'Bequia Beach Hotel', '2019-09-28'),
     (2, 2, 'Captian Needed', 'Octopus Charter Yacth needs a new skipper.  Are you a seasoned sailor?  Come join our crew!', 'Full Time', 'Octopus Yacth', '2019-10-02');
@@ -139,7 +139,7 @@ VALUES
     ('Miscelaneous', 'Everything else');
 
 INSERT INTO rentals 
-    (rentalCat, userId, title, description, location, contactName, contactEmail, contactPhone, airbnb, homeAway, bookingDOTcom, otherSite)
+    (rental_cat, user_id, title, description, location, contact_name, contact_email, contact_phone, airbnb, homeaway, booking_dot_com, other_site)
 VALUES
     (2, 1, 'Calabash Villa - Luxury Home', 'Entire home for rent.  Finished to the highest standard.  Amazing Ocean views and private pool.','Upper Cammel - Bequia', 'Ryan Carville', 'ryancarville@gmail.com', '+410791562329', 'https://www.airbnb.com', null, null, null),
     (1, 2, 'Sea Shells Apartment', '2 bedroom apartment with beach access.  Lovely, quiet area.','Lower Bay', 'Susan Lutz', 'susanLutz@gmail.com', '+17084569087', null, 'https://www.homeaway.com', null, 'https://www.bequia-apartmnet.com'),
@@ -156,13 +156,13 @@ VALUES
     ('Property Wanted', 'Looking to buy or rent a property? Look no further.');
 
 INSERT INTO market_place
-    (marketPlaceCat, userId, title, description, location, price, contactName, contactEmail, contactPhone)
+    (market_place_cat, user_id, title, description, location, price, contact_name, contact_email, contact_phone)
 VALUES
     (1, 1, 'Swim Suits', 'Hundreds of quality swim ware items for sale.', 'Bequia Harbour', '10/ea.', 'Ryan Carville', 'ryancarville@gmail.com', '+410791456789'),
     (3, 2, 'Jeep Wrangler', '2010 Red Jeep Wrangler CY with 10" lift.', 'Spring - Bequia', '22,459', 'Mike Busard', 'bigMike@aol.com', '+17082349846');
 
 INSERT INTO directory
-    (userid)
+    (user_id)
 VALUES
     (1),
     (2);

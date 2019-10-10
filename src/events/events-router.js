@@ -30,10 +30,10 @@ eventsRouter
 				next(err);
 			});
 	})
-	.get('/:eventId', (req, res, next) => {
+	.get('/:event_id', (req, res, next) => {
 		const db = req.app.get('db');
-		const { eventId } = req.params;
-		EventsService.getEventById(db, eventId)
+		const { event_id } = req.params;
+		EventsService.getEventById(db, event_id)
 			.then(event => {
 				if (!event) {
 					return res.status(401).json({ error: 'That event does not exists.' });
@@ -50,29 +50,29 @@ eventsRouter
 		const {
 			title,
 			location,
-			eventdate,
-			eventtime,
+			event_date,
+			event_time,
 			description,
-			userid,
-			dateposted
+			user_id,
+			date_posted
 		} = req.body;
 		const newEvent = {
 			title,
 			location,
-			eventdate,
-			eventtime,
+			event_date,
+			event_time,
 			description,
-			userid,
-			dateposted
+			user_id,
+			date_posted
 		};
 		for (const feild of [
-			'userid',
+			'user_id',
 			'title',
 			'description',
 			'location',
-			'eventdate',
-			'eventtime',
-			'dateposted'
+			'event_date',
+			'event_time',
+			'date_posted'
 		])
 			if (!req.body[feild]) {
 				return res
@@ -97,14 +97,21 @@ eventsRouter
 	.patch('/edit', (req, res, next) => {
 		const db = req.app.get('db');
 
-		const { id, title, description, location, eventdate, eventtime } = req.body;
+		const {
+			id,
+			title,
+			description,
+			location,
+			event_date,
+			event_time
+		} = req.body;
 		const eventToUpdate = {
 			id,
 			title,
 			description,
 			location,
-			eventdate,
-			eventtime
+			event_date,
+			event_time
 		};
 		const numOfValues = Object.entries(eventToUpdate).filter(Boolean).length;
 		if (numOfValues === 0) {
@@ -125,10 +132,10 @@ eventsRouter
 				next(err);
 			});
 	})
-	.delete('/delete/:eventId', (req, res, next) => {
+	.delete('/delete/:event_id', (req, res, next) => {
 		const db = req.app.get('db');
-		const { eventId } = req.params;
-		EventsService.deleteEvent(db, eventId)
+		const { event_id } = req.params;
+		EventsService.deleteEvent(db, event_id)
 			.then(rowAffected => {
 				if (!rowAffected) {
 					return res

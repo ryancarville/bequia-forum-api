@@ -8,10 +8,10 @@ const RentalsService = {
 		return db
 			.select('*')
 			.from('rentals')
-			.orderBy('dateposted', 'desc');
+			.orderBy('date_posted', 'desc');
 	},
-	getAllListingsForCat(db, rentalcat) {
-		return db.from('rentals').where({ rentalcat });
+	getAllListingsForCat(db, rental_cat) {
+		return db.from('rentals').where({ rental_cat });
 	},
 	getListingById(db, id) {
 		return db
@@ -41,16 +41,16 @@ const RentalsService = {
 	serializeListing(listing) {
 		return {
 			id: listing.id,
-			rentalcat: listing.rentalcat,
-			userid: listing.userid,
+			rentalcat: listing.rental_cat,
+			userid: listing.user_id,
 			title: xss(listing.title),
 			description: xss(listing.description),
 			location: xss(listing.location),
 			price: xss(listing.price),
-			contactname: xss(listing.contactname),
-			contactemail: xss(listing.contactemail),
-			contactphone: xss(listing.contactphone),
-			dateposted: listing.dateposted
+			contactname: xss(listing.contact_name),
+			contactemail: xss(listing.contact_email),
+			contactphone: xss(listing.contact_phone),
+			dateposted: listing.date_posted
 		};
 	}
 };
