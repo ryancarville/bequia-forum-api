@@ -98,11 +98,8 @@ marketPlaceRouter
 			'userid',
 			'title',
 			'description',
-			'location',
-			'price',
 			'contactname',
-			'contactemail',
-			'contactphone'
+			'contactemail'
 		])
 			if (!req.body[feild]) {
 				return res
@@ -178,7 +175,7 @@ marketPlaceRouter
 						.status(401)
 						.json({ error: 'No listing with that id exists.' });
 				}
-				return res.status(204).json(rowAffected);
+				return res.status(201).json(rowAffected);
 			})
 			.catch(err => {
 				console.log(err);

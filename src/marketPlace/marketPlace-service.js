@@ -5,7 +5,10 @@ const MarkerPlaceService = {
 		return db.select('*').from('market_place_cats');
 	},
 	getAllListings(db) {
-		return db.select('*').from('market_place');
+		return db
+			.select('*')
+			.from('market_place')
+			.orderBy('dateposted', 'desc');
 	},
 	getAllListingsInCat(db, marketplacecat) {
 		return db

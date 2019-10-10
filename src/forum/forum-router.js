@@ -114,17 +114,22 @@ forumRouter
 				next(err);
 			});
 	})
-	.patch('/edit/:postId', (req, res, next) => {
+	.patch('/edit', (req, res, next) => {
 		const db = req.app.get('db');
-		const id = req.params.postId;
-		const { boardid, title, content } = req.body;
-		const updatedPost = { id, boardid, title, content };
-		ForumService.updatePost(db, updatedPost)
+		const { id, boardid, title, content } = req.body;
+		const postToUpdate = { id, boardid, title, content };
+		const numOfValues = Object.entries(postToUpdate).filter(Boolean).length;
+		if (numOfValues === 0) {
+			return res.status(401).json({
+				error: 'Request body must contain title or content.'
+			});
+		}
+		ForumService.updatePost(db, postToUpdate)
 			.then(post => {
 				if (!post) {
 					return res.status(401).json({ error: `Post doesn't exists.` });
 				}
-				res.status(202).json(ForumService.serializePost(post));
+				res.status(201).json(ForumService.serializePost(post));
 			})
 			.catch(err => {
 				console.log(err);

@@ -9,14 +9,25 @@ const ForumService = {
 	},
 	getAllMessageBoardPosts(db) {
 		return db
-			.table('users')
-			.join('messageboard_posts', 'messageboard_posts.userid', '=', 'users.id')
-			.orderBy('dateposted', 'desc');
+			.select(
+				'messageboard_posts.id',
+				'messageboard_posts.userid',
+				'messageboard_posts.boardid',
+				'messageboard_posts.title',
+				'messageboard_posts.content',
+				'messageboard_posts.dateposted',
+				'messageboard_posts.likes',
+				'users.username',
+			)
+			.from('messageboard_posts')
+			.orderBy('dateposted', 'desc')
+			.innerJoin('users', 'messageboard_posts.userid', '=', 'users.id');
 	},
 	getNewestPosts(db) {
 		return db
 			.select(
 				'messageboard_posts.id',
+				'messageboard_posts.userid',
 				'messageboard_posts.boardid',
 				'messageboard_posts.title',
 				'messageboard_posts.content',
@@ -45,7 +56,7 @@ const ForumService = {
 	},
 	updatePost(db, updatedPost) {
 		return db
-			.into('messagebaord_posts')
+			.into('messageboard_posts')
 			.where({ id: updatedPost.id })
 			.update(updatedPost);
 	},
