@@ -19,13 +19,36 @@ directoryRouter
 				next(err);
 			});
 	})
-	.post('/addUser/:user_id', (req, res, next) => {
+	.post('/addListing', (req, res, next) => {
 		const db = req.app.get('db');
-		const { user_id } = req.params;
-		if (!userId) {
-			return res.status(401).json({ error: 'Request mus contain user id.' });
+		const {
+			user_id,
+			first_name,
+			last_name,
+			address,
+			city,
+			country,
+			email,
+			phone,
+			website
+		} = req.body;
+		const newListing = {
+			user_id,
+			first_name,
+			last_name,
+			address,
+			city,
+			country,
+			email,
+			phone,
+			website
+		};
+		for (const feild of ['first_name', 'last_name']) {
+			if (!req.body[feild]) {
+				return res.status(401).json({ error: `Please enter a ${key}` });
+			}
 		}
-		DirectoryService.insertUser(db, user_id)
+		DirectoryService.insertListing(db, newListing)
 			.then(listing => {
 				if (!listing) {
 					return res
@@ -34,25 +57,26 @@ directoryRouter
 				}
 				return res.status(201).json(listing);
 			})
-			.cathc(err => {
+			.catch(err => {
 				console.log(err);
 				next(err);
 			});
 	})
-	.delete('/delete/:user_id', (req, res, next) => {
+	.delete('/delete/:listingId', (req, res, next) => {
 		const db = req.app.get('db');
-		const { user_id } = req.params;
-		if (!userId) {
-			return res.status(401).json({ error: 'Request mus contain user id.' });
+		const { listingId } = req.params;
+		const id = parseInt(listingId);
+		if (!id) {
+			return res.status(401).json({ error: 'Request mus contain listing id.' });
 		}
-		DirectoryService.deletedUser(db, user_id)
+		DirectoryService.deletedListing(db, id)
 			.then(rowAffected => {
 				if (!rowAffected) {
 					return res
 						.status(401)
 						.json({ error: 'There is no entry with that id.' });
 				}
-				return res.status(204).json(rowAffected);
+				return res.status(201).json(rowAffected);
 			})
 			.catch(err => {
 				console.log(err);

@@ -162,8 +162,8 @@ VALUES
     (3, 2, 'Jeep Wrangler', '2010 Red Jeep Wrangler CY with 10" lift.', 'Spring - Bequia', '22,459', 'Mike Busard', 'bigMike@aol.com', '+17082349846');
 
 INSERT INTO directory
-    (user_id)
+    (user_id, first_name, last_name, address, city, state, country, email, phone, website)
 VALUES
-    (1),
-    (2);
+    (1, 'Ryan', 'Carville', 'Chamau 6','Hunenberg', 'Zug', 'Switzerland','ryancarville@gmail.com', '+41701562329', 'https://www.beardystudios.com'),
+    (2, 'Test', 'User','291 Test User Lane','San Francisco', 'CA', 'USA','testUser@gmail.com', null, null);
 COMMIT;

@@ -17,7 +17,6 @@ const AuthService = {
 		return bcrypt.compare(password, hash);
 	},
 	createJwt(subject, payload) {
-		console.log(config);
 		return jwt.sign(payload, config.JWT_SECRET, {
 			subject,
 			expiresIn: config.JWT_EXPIRY,
@@ -25,9 +24,17 @@ const AuthService = {
 		});
 	},
 	verifyJwt(token) {
+		console.log(
+			jwt.verify(token, config.JWT_SECRET, {
+				algorithms: ['HS256']
+			})
+		);
 		return jwt.verify(token, config.JWT_SECRET, {
 			algorithms: ['HS256']
 		});
+	},
+	decodeJwt(token) {
+		return jwt.decode(token, config.JWT_SECRET);
 	},
 	parseBasicToken(token) {
 		return Buffer.from(token, 'base64')
