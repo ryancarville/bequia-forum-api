@@ -10,6 +10,7 @@ const morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
 //routers
 const authRouter = require('./auth/auth-router');
 const signUpRouter = require('./signUp/signUp-router');
+const usersRouter = require('./users/users-router');
 const forumRouter = require('./forum/forum-router');
 const commentsRouter = require('./comments/comments-router');
 const jobsRouter = require('./jobs/jobs-router');
@@ -28,8 +29,9 @@ app.use(
 app.use(helmet());
 app.use(jsonBodyParser);
 //paths
-app.use('/singUp', signUpRouter);
+app.use('/signUp', signUpRouter);
 app.use('/login', authRouter);
+app.use('/users', usersRouter);
 app.use('/forum', forumRouter);
 app.use('/comments', commentsRouter);
 app.use('/events', eventsRouter);

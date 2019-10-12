@@ -21,7 +21,7 @@ const SignUpService = {
 		if (password.length < 8) {
 			return 'Password must be longer than 8 characters.';
 		}
-		if (password > 72) {
+		if (password.length > 72) {
 			return 'Passsword must be less than 72 characters.';
 		}
 		if (password.startsWith(' ') || password.endsWith(' ')) {
@@ -40,8 +40,7 @@ const SignUpService = {
 			id: user.id,
 			firstName: user.first_name,
 			lastName: user.last_name,
-			email: user.email,
-			userName: user.user_name
+			email: user.email
 		};
 	}
 };

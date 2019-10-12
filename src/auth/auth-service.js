@@ -3,15 +3,21 @@ const bcrypt = require('bcryptjs');
 const config = require('../config');
 
 const AuthService = {
-	getUserWithUsername(db, userName) {
+	getUserWithEmail(db, email) {
 		return db('users')
-			.where({ userName })
+			.where({ email })
+			.first();
+	},
+	getUserWithUserName(db, user_name) {
+		return db('users')
+			.where({ user_name })
 			.first();
 	},
 	comparePassword(password, hash) {
 		return bcrypt.compare(password, hash);
 	},
 	createJwt(subject, payload) {
+		console.log(config);
 		return jwt.sign(payload, config.JWT_SECRET, {
 			subject,
 			expiresIn: config.JWT_EXPIRY,
@@ -20,7 +26,7 @@ const AuthService = {
 	},
 	verifyJwt(token) {
 		return jwt.verify(token, config.JWT_SECRET, {
-			algorithm: ['HS256']
+			algorithms: ['HS256']
 		});
 	},
 	parseBasicToken(token) {

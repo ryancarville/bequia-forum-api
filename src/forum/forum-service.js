@@ -36,9 +36,9 @@ const ForumService = {
 				'users.user_name'
 			)
 			.from('messageboard_posts')
+			.innerJoin('users', 'messageboard_posts.user_id', '=', 'users.id')
 			.orderBy('date_posted', 'desc')
-			.limit(8)
-			.innerJoin('users', 'messageboard_posts.user_id', '=', 'users.id');
+			.limit(8);
 	},
 	getSpecificBoardPosts(db, board_id) {
 		return db
@@ -66,6 +66,9 @@ const ForumService = {
 			.where({ id })
 			.delete();
 	},
+	getLikesTracker(db) {
+		return db.select('*').from('likes_tracker');
+	},
 	addLike(db, id) {
 		return db('messageboard_posts')
 			.where({ id })
@@ -73,12 +76,23 @@ const ForumService = {
 			.returning('*')
 			.then(rows => rows[0]);
 	},
-	subtractLike(db, id) {
+	addTrackerInfo(db, info) {
+		return db('likes_tracker')
+			.insert(info)
+			.returning('*')
+			.then(rows => rows[0]);
+	},
+	minusLike(db, id) {
 		return db('messageboard_posts')
 			.where({ id })
 			.decrement('likes', '1')
 			.returning('*')
 			.then(rows => rows[0]);
+	},
+	deleteTrackerInfo(db, info) {
+		return db('likes_tracker')
+			.where({ user_id: info.user_id, post_id: info.post_id })
+			.delete();
 	},
 	serializePost(newPost) {
 		return {

@@ -87,6 +87,20 @@ forumRouter
 				next(err);
 			});
 	})
+	.get('/likesTracker', (req, res, next) => {
+		const db = req.app.get('db');
+		ForumService.getLikesTracker(db)
+			.then(tracker => {
+				if (!tracker) {
+					return res.status(401).json({ error: 'Could not get likes tracker' });
+				}
+				return res.status(200).json(tracker);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
 	.post('/addPost', (req, res, next) => {
 		const db = req.app.get('db');
 		const { board_id, user_id, title, content, date_posted, likes } = req.body;
@@ -142,39 +156,99 @@ forumRouter
 				next(err);
 			});
 	})
-	.patch('/post-like/:post_id/:like', (req, res, next) => {
+	.patch('/post/addLike/:post_id', (req, res, next) => {
 		const db = req.app.get('db');
-		const { post_id, like } = req.params;
-		if (like === '+') {
-			ForumService.addLike(db, post_id)
-				.then(post => {
-					if (!post) {
-						return res
-							.status(401)
-							.json({ error: 'Could not add a like to the post.' });
-					}
-					return res.status(201).json(post);
-				})
-				.catch(err => {
-					console.log(err);
-					next(err);
-				});
+		const { post_id } = req.params;
+		if (!post_id) {
+			return res
+				.status(401)
+				.json({ error: `Request body must conatin post_id.` });
 		}
-		if (like === '-') {
-			ForumService.subtractLike(db, post_id)
-				.then(post => {
-					if (!post) {
-						return res
-							.status(401)
-							.json({ error: 'Could not subtract a like from the post.' });
-					}
-					return res.status(201).json(post);
-				})
-				.catch(err => {
-					console.log(err);
-					next(err);
-				});
+		ForumService.addLike(db, post_id)
+			.then(row => {
+				if (!row) {
+					return res
+						.status(401)
+						.json({ error: 'Could not add a like to the post.' });
+				}
+				return res.status(201).json(row);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
+	.patch('/post/minusLike/:post_id', (req, res, next) => {
+		const db = req.app.get('db');
+		const { post_id } = req.params;
+		if (!post_id) {
+			return res
+				.status(401)
+				.json({ error: `Request body must contain post_id.` });
 		}
+		ForumService.minusLike(db, post_id)
+			.then(row => {
+				if (!row) {
+					return res
+						.status(401)
+						.json({ error: 'Could not minus like to post.' });
+				}
+				return res.status(201).json(row);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
+	.post('/post/addToTracker', (req, res, next) => {
+		const db = req.app.get('db');
+		const { post_id, user_id } = req.body;
+		const newInfo = { post_id, user_id };
+		for (const feild of ['post_id', 'user_id'])
+			if (!req.body[feild]) {
+				return res
+					.status(401)
+					.json({ error: `Request body must contain ${feild}` });
+			}
+		ForumService.addTrackerInfo(db, newInfo)
+			.then(row => {
+				if (!row) {
+					return res
+						.status(401)
+						.json({ error: 'Could not add info to likes tracker.' });
+				}
+				return res.status(201).json(row);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
+	.delete('/post/deleteFromTracker', (req, res, next) => {
+		const db = req.app.get('db');
+		const { post_id, user_id } = req.body;
+		const infoToDelete = { post_id, user_id };
+		console.log(infoToDelete);
+		for (const feild of ['post_id', 'user_id'])
+			if (!req.body[feild]) {
+				return res
+					.status(401)
+					.json({ error: `Request body must contain ${feild}` });
+			}
+		ForumService.deleteTrackerInfo(db, infoToDelete)
+			.then(rowsAffected => {
+				console.log(rowsAffected);
+				if (!rowsAffected) {
+					return res
+						.status(401)
+						.json({ error: 'Could not delete from likes tracker.' });
+				}
+				return res.status(201).json(rowsAffected);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
 	})
 	.delete('/posts/:post_id', (req, res, next) => {
 		const db = req.app.get('db');

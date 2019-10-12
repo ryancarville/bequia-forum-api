@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const SignUpService = require('./signUp-service');
 const signUpRouter = express.Router();
 
@@ -22,10 +23,10 @@ signUpRouter.post('/', (req, res, next) => {
 		return res.status(400).json({ error: passwordError });
 	}
 
-	SignUpService.hasUserWithUserName(db, userName)
-		.then(hasUserWithUserName => {
-			if (hasUserWithUserName) {
-				return res.status(400).json({ error: 'Username is already taken.' });
+	SignUpService.hasUserWithUserName(db, user_name)
+		.then(hasUserWithEmail => {
+			if (hasUserWithEmail) {
+				return res.status(400).json({ error: 'User Name is already taken.' });
 			}
 			return SignUpService.hashPassword(password).then(hashedPassword => {
 				const newUser = {
@@ -34,12 +35,12 @@ signUpRouter.post('/', (req, res, next) => {
 					email,
 					user_name,
 					password: hashedPassword,
-					dateCreated: 'now()'
+					date_created: 'now()'
 				};
 				return SignUpService.insertUser(db, newUser).then(user => {
 					return res
 						.status(201)
-						.location(path.prosix.join('/user', `${user.id}`))
+						.location(path.posix.join('/user', `${user.id}`))
 						.json(SignUpService.serializeUser(user));
 				});
 			});
