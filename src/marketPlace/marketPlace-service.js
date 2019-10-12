@@ -41,6 +41,9 @@ const MarkerPlaceService = {
 			.where({ id })
 			.delete();
 	},
+	sortRentals(db, column, sort) {
+		return db('market_place').orderBy(column, sort);
+	},
 	serializeListing(listing) {
 		return {
 			id: listing.id,

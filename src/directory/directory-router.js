@@ -19,6 +19,23 @@ directoryRouter
 				next(err);
 			});
 	})
+	.get('/sort/:column/:sortType', (req, res, next) => {
+		const db = req.app.get('db');
+		const { column, sortType } = req.params;
+		DirectoryService.sortDirectory(db, column, sortType)
+			.then(dir => {
+				if (!dir) {
+					return res
+						.status(401)
+						.json({ error: 'Something went wrong sorting the directory.' });
+				}
+				return res.status(200).json(dir);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
 	.post('/addListing', (req, res, next) => {
 		const db = req.app.get('db');
 		const {

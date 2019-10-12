@@ -35,6 +35,14 @@ const JobsService = {
 			.where({ id: updatedJob.id })
 			.update(updatedJob);
 	},
+	sortJobs(db, column, sort) {
+		return db('jobs').orderBy(column, sort);
+	},
+	sortJobsByEmployment(db, sort) {
+		return db('jobs')
+			.where({ employment: sort })
+			.orderBy('date_posted', 'desc');
+	},
 	deleteJob(db, id) {
 		return db
 			.from('jobs')

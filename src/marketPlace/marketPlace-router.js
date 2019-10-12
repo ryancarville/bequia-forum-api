@@ -69,6 +69,23 @@ marketPlaceRouter
 				next(err);
 			});
 	})
+	.get('/sort/:column/:sortType', (req, res, next) => {
+		const db = req.app.get('db');
+		const { column, sortType } = req.params;
+		MarketPlaceService.sortRentals(db, column, sortType)
+			.then(dir => {
+				if (!dir) {
+					return res
+						.status(401)
+						.json({ error: 'Something went wrong sorting the directory.' });
+				}
+				return res.status(200).json(dir);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
 	.post('/addListing', (req, res, next) => {
 		const db = req.app.get('db');
 		const {
@@ -80,7 +97,8 @@ marketPlaceRouter
 			price,
 			contact_name,
 			contact_email,
-			contact_phone
+			contact_phone,
+			date_posted
 		} = req.body;
 		const newListing = {
 			market_place_cat,
@@ -91,7 +109,8 @@ marketPlaceRouter
 			price,
 			contact_name,
 			contact_email,
-			contact_phone
+			contact_phone,
+			date_posted
 		};
 		for (const feild of [
 			'market_place_cat',

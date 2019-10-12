@@ -87,6 +87,42 @@ forumRouter
 				next(err);
 			});
 	})
+	.get('/search/posts/:term', (req, res, next) => {
+		const db = req.app.get('db');
+		var { term } = req.params;
+		ForumService.searchPosts(db, term)
+			.then(posts => {
+				if (!posts) {
+					return res
+						.status(404)
+						.json({ error: `There are no posts with the term ${term}` });
+				}
+				console.log(posts);
+				return res.status(200).json(posts);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
+	.get('/search/posts/:board_id/:term', (req, res, next) => {
+		const db = req.app.get('db');
+		var { board_id, term } = req.params;
+		ForumService.searchBoardPosts(db, board_id, term)
+			.then(posts => {
+				if (!posts) {
+					return res
+						.status(404)
+						.json({ error: `There are no posts with the term ${term}` });
+				}
+				console.log(posts);
+				return res.status(200).json(posts);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
 	.get('/likesTracker', (req, res, next) => {
 		const db = req.app.get('db');
 		ForumService.getLikesTracker(db)
@@ -95,6 +131,23 @@ forumRouter
 					return res.status(401).json({ error: 'Could not get likes tracker' });
 				}
 				return res.status(200).json(tracker);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
+	.get('/sort/:column/:sortType', (req, res, next) => {
+		const db = req.app.get('db');
+		const { column, sortType } = req.params;
+		ForumService.sortPosts(db, column, sortType)
+			.then(dir => {
+				if (!dir) {
+					return res
+						.status(401)
+						.json({ error: 'Something went wrong sorting the directory.' });
+				}
+				return res.status(200).json(dir);
 			})
 			.catch(err => {
 				console.log(err);

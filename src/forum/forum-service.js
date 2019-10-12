@@ -47,6 +47,21 @@ const ForumService = {
 			.join('messageboard_posts', 'messageboard_posts.user_id', '=', 'users.id')
 			.orderBy('date_posted', 'desc');
 	},
+	searchPosts(db, term) {
+		return db
+			.select('*')
+			.from('messageboard_posts')
+			.where('title', 'ilike', `%${term}%`)
+			.orderBy('date_posted', 'desc');
+	},
+	searchBoardPosts(db, board_id, term) {
+		return db
+			.select('*')
+			.from('messageboard_posts')
+			.where({ board_id })
+			.andWhere('title', 'ilike', `%${term}%`)
+			.orderBy('date_posted', 'desc');
+	},
 	insertPost(db, newPost) {
 		return db
 			.into('messageboard_posts')
@@ -93,6 +108,9 @@ const ForumService = {
 		return db('likes_tracker')
 			.where({ user_id: info.user_id, post_id: info.post_id })
 			.delete();
+	},
+	sortPosts(db, column, sort) {
+		return db('messageboard_posts').orderBy(column, sort);
 	},
 	serializePost(newPost) {
 		return {

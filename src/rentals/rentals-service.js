@@ -38,6 +38,9 @@ const RentalsService = {
 			.where({ id })
 			.delete();
 	},
+	sortRentals(db, column, sort) {
+		return db('rentals').orderBy(column, sort);
+	},
 	serializeListing(listing) {
 		return {
 			id: listing.id,

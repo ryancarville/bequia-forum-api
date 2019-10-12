@@ -14,6 +14,9 @@ const DirectoryService = {
 			.from('directory')
 			.where({ id })
 			.delete();
+	},
+	sortDirectory(db, column, sort) {
+		return db('directory').orderBy(column, sort);
 	}
 };
 module.exports = DirectoryService;

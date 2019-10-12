@@ -6,7 +6,6 @@ authRouter
 	.post('/', (req, res, next) => {
 		const { email, user_name, password } = req.body;
 		const logInUser = { email, user_name, password };
-		console.log(logInUser);
 		for (const [key, value] of Object.entries(logInUser)) {
 			if (value == 0) {
 				return res.status(40).json({ error: `Please enter a ${key}` });
@@ -30,7 +29,6 @@ authRouter
 								.json({ error: `Incorrect email address or password.` });
 						const sub = dbUser.email;
 						const payload = { user_id: dbUser.id };
-						console.log(sub);
 						res.send({
 							user_id: dbUser.id,
 							authToken: AuthService.createJwt(sub, payload)
@@ -77,16 +75,10 @@ authRouter
 		if (!token) {
 			return res.status(401).json({ error: 'Request must contain a token.' });
 		}
-		return res
-			.send({
-				user_id: AuthService.verifyJwt(token).user_id,
-				email: AuthService.verifyJwt(token).sub
-			})
-
-			.catch(err => {
-				console.log(err);
-				next(err);
-			});
+		return res.send({
+			user_id: AuthService.verifyJwt(token).user_id,
+			email: AuthService.verifyJwt(token).sub
+		});
 	});
 
 module.exports = authRouter;
