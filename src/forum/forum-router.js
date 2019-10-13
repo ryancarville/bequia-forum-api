@@ -54,6 +54,23 @@ forumRouter
 				next(err);
 			});
 	})
+	.get('/numOfThreads/:board_id', (req, res, next) => {
+		const db = req.app.get('db');
+		const { board_id } = req.params;
+		ForumService.getNumOfThreads(db, board_id)
+			.then(numOfThreads => {
+				if (!numOfThreads) {
+					return res
+						.status(404)
+						.json({ error: 'Message Board does not exist' });
+				}
+				return res.status(200).json(numOfThreads);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
 	.get('/posts', (req, res, next) => {
 		const db = req.app.get('db');
 		ForumService.getAllMessageBoardPosts(db)
@@ -90,16 +107,31 @@ forumRouter
 	.get('/search/posts/:term', (req, res, next) => {
 		const db = req.app.get('db');
 		var { term } = req.params;
-		ForumService.searchPosts(db, term)
-			.then(posts => {
-				if (!posts) {
-					return res
-						.status(404)
-						.json({ error: `There are no posts with the term ${term}` });
-				}
-				console.log(posts);
+		let posts = {};
+		ForumService.searchAllBoardPosts(db, term)
+			.then(mbPosts => {
+				posts.mbPosts = mbPosts;
+			})
+			.then(() => {
+				return ForumService.searchMarketPlace(db, term);
+			})
+			.then(mpPosts => {
+				posts.mpPosts = mpPosts;
+			})
+			.then(() => {
+				return ForumService.searchRentals(db, term);
+			})
+			.then(rPosts => {
+				posts.rPosts = rPosts;
+			})
+			.then(() => {
+				return ForumService.searchJobs(db, term);
+			})
+			.then(jPosts => {
+				posts.jPosts = jPosts;
 				return res.status(200).json(posts);
 			})
+
 			.catch(err => {
 				console.log(err);
 				next(err);
@@ -108,6 +140,7 @@ forumRouter
 	.get('/search/posts/:board_id/:term', (req, res, next) => {
 		const db = req.app.get('db');
 		var { board_id, term } = req.params;
+
 		ForumService.searchBoardPosts(db, board_id, term)
 			.then(posts => {
 				if (!posts) {

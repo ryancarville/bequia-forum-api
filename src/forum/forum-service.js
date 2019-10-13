@@ -7,6 +7,12 @@ const ForumService = {
 	getAllMessageBoards(db) {
 		return db.from('messageboards');
 	},
+	getNumOfThreads(db, board_id) {
+		return db
+			.count('board_id')
+			.from('messageboard_posts')
+			.where({ board_id });
+	},
 	getAllMessageBoardPosts(db) {
 		return db
 			.select(
@@ -54,6 +60,31 @@ const ForumService = {
 			.where('title', 'ilike', `%${term}%`)
 			.orderBy('date_posted', 'desc');
 	},
+	searchAllBoardPosts(db, term) {
+		return db
+			.select('*')
+			.from('messageboard_posts')
+			.where('title', 'ilike', `%${term}%`);
+	},
+	searchJobs(db, term) {
+		return db
+			.select('*')
+			.from('jobs')
+			.where('title', 'ilike', `%${term}%`);
+	},
+	searchRentals(db, term) {
+		return db
+			.select('*')
+			.from('rentals')
+			.where('title', 'ilike', `%${term}%`);
+	},
+	searchMarketPlace(db, term) {
+		return db
+			.select('*')
+			.from('market_place')
+			.where('title', 'ilike', `%${term}%`);
+	},
+
 	searchBoardPosts(db, board_id, term) {
 		return db
 			.select('*')
