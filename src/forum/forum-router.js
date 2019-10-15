@@ -110,24 +110,36 @@ forumRouter
 		let posts = {};
 		ForumService.searchAllBoardPosts(db, term)
 			.then(mbPosts => {
+				if (mbPosts.length === 0) {
+					return;
+				}
 				posts.mbPosts = mbPosts;
 			})
 			.then(() => {
 				return ForumService.searchMarketPlace(db, term);
 			})
 			.then(mpPosts => {
+				if (mpPosts.length === 0) {
+					return;
+				}
 				posts.mpPosts = mpPosts;
 			})
 			.then(() => {
 				return ForumService.searchRentals(db, term);
 			})
 			.then(rPosts => {
+				if (rPosts.length === 0) {
+					return;
+				}
 				posts.rPosts = rPosts;
 			})
 			.then(() => {
 				return ForumService.searchJobs(db, term);
 			})
 			.then(jPosts => {
+				if (jPosts.length === 0) {
+					return res.status(200).json(posts);
+				}
 				posts.jPosts = jPosts;
 				return res.status(200).json(posts);
 			})
@@ -140,7 +152,6 @@ forumRouter
 	.get('/search/posts/:board_id/:term', (req, res, next) => {
 		const db = req.app.get('db');
 		var { board_id, term } = req.params;
-
 		ForumService.searchBoardPosts(db, board_id, term)
 			.then(posts => {
 				if (!posts) {
@@ -149,7 +160,8 @@ forumRouter
 						.json({ error: `There are no posts with the term ${term}` });
 				}
 				console.log(posts);
-				return res.status(200).json(posts);
+
+				return res.status(200).json({ specificBoard: posts });
 			})
 			.catch(err => {
 				console.log(err);
