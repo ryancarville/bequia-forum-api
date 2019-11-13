@@ -10,11 +10,8 @@ const JobsService = {
 			.from('jobs')
 			.orderBy('date_posted', 'desc');
 	},
-	getJobsInCat(db, catId) {
-		return db
-			.select('*')
-			.from('jobs')
-			.where({ job_cat: catId });
+	getJobListingsByCat(db, job_cat) {
+		return db.from('jobs').where({ job_cat });
 	},
 	getJobWithId(db, id) {
 		return db

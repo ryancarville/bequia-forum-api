@@ -10,7 +10,7 @@ const RentalsService = {
 			.from('rentals')
 			.orderBy('date_posted', 'desc');
 	},
-	getAllListingsForCat(db, rental_cat) {
+	getAllListingsByCat(db, rental_cat) {
 		return db.from('rentals').where({ rental_cat });
 	},
 	getListingById(db, id) {

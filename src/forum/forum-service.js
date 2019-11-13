@@ -4,6 +4,16 @@ const ForumService = {
 	getMessageBoardSections(db) {
 		return db.select('*').from('messageboard_sections');
 	},
+	getBoardsForSection(db, messageboard_section) {
+		return db.from('messageboards').where({ messageboard_section });
+	},
+	getForumNameById(db, id) {
+		return db
+			.select('name')
+			.from('messageboards')
+			.where({ id })
+			.first();
+	},
 	getAllMessageBoards(db) {
 		return db.from('messageboards');
 	},
@@ -45,6 +55,15 @@ const ForumService = {
 			.innerJoin('users', 'messageboard_posts.user_id', '=', 'users.id')
 			.orderBy('date_posted', 'desc')
 			.limit(8);
+	},
+	getBoardPosts(db, board_id) {
+		return db.from('messageboard_posts').where({ board_id });
+	},
+	getPostById(db, id) {
+		return db
+			.from('messageboard_posts')
+			.where({ id })
+			.first();
 	},
 	getSpecificBoardPosts(db, board_id) {
 		return db

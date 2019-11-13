@@ -111,14 +111,14 @@ VALUES
     (2, 'Fish Fry', 'Keegans Beach Bar', 'Come for our monthly firsh fry on the beach. Kids under 10 free!', '2019-10-20', '12:00 - until Late', '2019-10-14');
 
 INSERT INTO job_cats
-    (name, description)
+    (name, description, img_url)
 VALUES
-    ('Hospitality', 'Jobs in Hotel, Resturant, Bar, Cartering services.'),
-    ('Marine', 'Jobs in anything sea/sailing related.'),
-    ('Wellness/Beauty', 'Jobs related to the body thearpies, beauty and/or health.'),
-    ('Professional Services', 'Jobs that require a high level of skill.  i.e. Architech, Finacial Services, Property Manager, etc.'),
-    ('Construction', 'Jobs in commercial and/or residential building. Labor skills only.'),
-    ('Special Skills', 'Jobs that do not fall under any other catagory.');
+    ('Hospitality', 'Jobs in Hotel, Resturant, Bar, Cartering services.', '../icons/hospitality-icon.png'),
+    ('Marine', 'Jobs in anything sea/sailing related.', '../icons/marine-icon.png'),
+    ('Wellness/Beauty', 'Jobs related to the body thearpies, beauty and/or health.', '../icons/wellness-icon.png'),
+    ('Professional Services', 'Jobs that require a high level of skill.  i.e. Architech, Finacial Services, Property Manager, etc.', '../icons/professional-icon.png'),
+    ('Construction', 'Jobs in commercial and/or residential building. Labor skills only.', '../icons/construction-icon.png'),
+    ('Special Skills', 'Jobs that do not fall under any other catagory.', '../icons/special-skills-icon.png');
 
 INSERT INTO jobs
     (job_cat, user_id, title, description, employment, location, date_posted)
@@ -127,16 +127,15 @@ VALUES
     (2, 2, 'Captian Needed', 'Octopus Charter Yacth needs a new skipper.  Are you a seasoned sailor?  Come join our crew!', 'Full Time', 'Octopus Yacth', '2019-10-02');
 
 INSERT INTO rental_cats
-    (name, description)
+    (name, description, img_path)
 VALUES
-    ('Apartment', 'By Owner or Company'),
-    ('House', 'By Owner or Company'),
-    ('Boat', 'By Owner or Company'),
-    ('Car', 'By Owner or Company'),
-    ('Event Space', 'By Owner or Compnay'),
-    ('Tools', 'By Owner'),
-    ('Sporting/Beach Equipment', 'By Owner'),
-    ('Miscelaneous', 'Everything else');
+    ('Apartment', 'By Owner or Company', '../icons/JPEG/apartment.png'),
+    ('House', 'By Owner or Company', '../icons/JPEG/house.jpg'),
+    ('Boat', 'By Owner or Company', '../icons/JPEG/boat.jpg'),
+    ('Car', 'By Owner or Company', '../icons/JPEG/car.jpg'),
+    ('Tools', 'By Owner', '../icons/JPEG/tools.jpg'),
+    ('Sporting/Beach Equipment', 'By Owner', '../icons/JPEG/sporting.jpg'),
+    ('Miscelaneous', 'Everything else', '../icons/JPEG/misc.png');
 
 INSERT INTO rentals 
     (rental_cat, user_id, title, description, location, contact_name, contact_email, contact_phone, airbnb, homeaway, booking_dot_com, other_site)
@@ -146,14 +145,14 @@ VALUES
     (3, 1 , '35ft Power Boat', 'Gorgoues and powerful speeed boat for rent.  Can hire a driver at additional expense.', 'Saint Vincent', 'Michael Baptise', 'mBoat@aol.com', '+17082345398', null, null, null, 'https://www.michaeltours.com');
 
 INSERT INTO market_place_cats
-    (name, description)
+    (name, description, img_path)
 VALUES
-    ('Items for Sale', 'Sell whatever you like.'),
-    ('Items Wanted', 'Looking to buy something? Post it here.'),
-    ('Cars/Trucks/Boats/Bikes', 'All engine based vheicles only.'),
-    ('Free Stuff', 'Not worth selling?  Just give it away.'),
-    ('Property For Sale', 'Properties for sale.'),
-    ('Property Wanted', 'Looking to buy or rent a property? Look no further.');
+    ('Items for Sale', 'Sell whatever you like.', '../icons/JPEG/for-sale.png'),
+    ('Items Wanted', 'Looking to buy something? Post it here.', '../icons/JPEG/items-wanted.png'),
+    ('Motor Vehicles', 'All engine based vheicles only.', '../icons/JPEG/vehicle-for-sale.png'),
+    ('Free Stuff', 'Not worth selling?  Just give it away.', '../icons/JPEG/free-stuff.png'),
+    ('Property For Sale', 'Properties for sale.', '../icons/JPEG/property-for-sale.png'),
+    ('Property Wanted', 'Looking to buy or rent a property? Look no further.', '../icons/JPEG/property-looking.png');
 
 INSERT INTO market_place
     (market_place_cat, user_id, title, description, location, price, contact_name, contact_email, contact_phone)

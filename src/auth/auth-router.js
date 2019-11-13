@@ -75,6 +75,7 @@ authRouter
 		if (!token) {
 			return res.status(401).json({ error: 'Request must contain a token.' });
 		}
+		
 		return res.send({
 			user_id: AuthService.verifyJwt(token).user_id,
 			email: AuthService.verifyJwt(token).sub

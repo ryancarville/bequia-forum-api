@@ -4,8 +4,8 @@ module.exports = {
 	migrationDirectory: 'migrations',
 	driver: 'pg',
 	connectiongString:
-		process.env.NODE_ENV === 'test'
-			? process.env.TEST_DATABASE_URL
+		process.env.NODE_ENV === 'development'
+			? process.env.DB_URL
 			: process.env.DATABASE_URL,
 	ssl: !!process.env.SSL,
 	host: process.env.MIGRATION_DB_HOST,

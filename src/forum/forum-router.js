@@ -71,6 +71,81 @@ forumRouter
 				next(err);
 			});
 	})
+	.get('/messageboards/get-board-name/:id', (req, res, next) => {
+		const db = req.app.get('db');
+		var { id } = req.params;
+		id = parseInt(id, 10);
+		ForumService.getForumNameById(db, id)
+			.then(boardName => {
+				if (boardName.length === 0) {
+					return res.status(200).json({
+						error: `There are no boards for that section`
+					});
+				}
+				console.log(boardName);
+				return res.status(200).json(boardName);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
+	.get('/messageboards/get-board-posts/:board_id', (req, res, next) => {
+		const db = req.app.get('db');
+		var { board_id } = req.params;
+		board_id = parseInt(board_id, 10);
+		ForumService.getBoardPosts(db, board_id)
+			.then(boardPosts => {
+				if (boardPosts.length === 0) {
+					return res.status(200).json({
+						error: `There are no boards for that section`
+					});
+				}
+				console.log(boardPosts);
+				return res.status(200).json(boardPosts);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
+	.get('/messageboards/get-post-by-id/:id', (req, res, next) => {
+		const db = req.app.get('db');
+		var { id } = req.params;
+		id = parseInt(id, 10);
+		ForumService.getPostById(db, id)
+			.then(post => {
+				if (post.length === 0) {
+					return res.status(200).json({
+						error: `There are no posts with that id.`
+					});
+				}
+
+				return res.status(200).json(post);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
+	.get('/messageboards/:messageboard_section', (req, res, next) => {
+		const db = req.app.get('db');
+		var { messageboard_section } = req.params;
+		messageboard_section = parseInt(messageboard_section, 10);
+		ForumService.getBoardsForSection(db, messageboard_section)
+			.then(boards => {
+				if (boards.length === 0) {
+					return res.status(200).json({
+						error: `There are no boards for that section`
+					});
+				}
+				return res.status(200).json(boards);
+			})
+			.catch(err => {
+				console.log(err);
+				next(err);
+			});
+	})
 	.get('/posts', (req, res, next) => {
 		const db = req.app.get('db');
 		ForumService.getAllMessageBoardPosts(db)

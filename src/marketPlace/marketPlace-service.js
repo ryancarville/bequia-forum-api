@@ -10,11 +10,8 @@ const MarkerPlaceService = {
 			.from('market_place')
 			.orderBy('date_posted', 'desc');
 	},
-	getAllListingsInCat(db, marketplacecat) {
-		return db
-			.select('*')
-			.from('market_place')
-			.where({ marketplacecat });
+	getAllListingsByCat(db, market_place_cat) {
+		return db.from('market_place').where({ market_place_cat });
 	},
 	getListingById(db, id) {
 		return db

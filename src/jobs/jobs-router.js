@@ -20,14 +20,16 @@ jobsRouter
 				next(err);
 			});
 	})
-	.get('/listings', (req, res, next) => {
+	.get('/listings-by-cat/:job_cat', (req, res, next) => {
 		const db = req.app.get('db');
-		JobsService.getAllJobs(db)
+		var { job_cat } = req.params;
+		job_cat = parseInt(job_cat, 10);
+		JobsService.getJobListingsByCat(db, job_cat)
 			.then(jobs => {
-				if (!jobs) {
+				if (jobs.length === 0) {
 					return res
-						.status(401)
-						.json({ error: 'There are no jobs in the data base.' });
+						.status(200)
+						.json({ error: 'There are no jobs in this catagory.' });
 				}
 				return res.status(200).json(jobs);
 			})
@@ -38,12 +40,13 @@ jobsRouter
 	})
 	.get('/listings/:id', (req, res, next) => {
 		const db = req.app.get('db');
-		const { id } = req.params;
+		var { id } = req.params;
+		id = parseInt(id, 10);
 		JobsService.getJobWithId(db, id)
 			.then(job => {
 				if (!job) {
 					return res
-						.status(401)
+						.status(200)
 						.json({ error: 'That job listing does not exists.' });
 				}
 				return res.status(200).json(JobsService.serializeJob(job));

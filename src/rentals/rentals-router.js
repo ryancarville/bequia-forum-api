@@ -35,16 +35,20 @@ rentalRouter
 				next(err);
 			});
 	})
-	.get('/catagory/:id', (req, res, next) => {
+	.get('/listings-by-cat/:rental_cat', (req, res, next) => {
 		const db = req.app.get('db');
-		const { id } = req.params;
-		RentalsService.getAllListingsForCat(db, id)
+		var { rental_cat } = req.params;
+		console.log(rental_cat);
+		rental_cat = parseInt(rental_cat, 10);
+		RentalsService.getAllListingsByCat(db, rental_cat)
 			.then(listings => {
-				if (!listings) {
-					return res.status(401).json({
-						error: 'There are not rental listings for this catagory.'
+				console.log(listings);
+				if (listings.length === 0) {
+					return res.status(200).json({
+						error: `There are no rental listings for this catagory.`
 					});
 				}
+
 				return res.status(200).json(listings);
 			})
 			.catch(err => {
@@ -52,7 +56,7 @@ rentalRouter
 				next(err);
 			});
 	})
-	.get('/listings/:id', (req, res, next) => {
+	.get('/listing/:id', (req, res, next) => {
 		const db = req.app.get('db');
 		const { id } = req.params;
 		RentalsService.getListingById(db, id)

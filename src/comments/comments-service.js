@@ -1,6 +1,6 @@
 const xss = require('xss');
 const CommentsService = {
-	getAllComments(db) {
+	getComments(db) {
 		return db
 			.select(
 				'comments.id',
@@ -16,6 +16,12 @@ const CommentsService = {
 			.innerJoin('users', 'comments.user_id', '=', 'users.id')
 			.orderBy('comments.date_posted', 'desc');
 	},
+	getCommentsByPostId(db, post_id) {
+		return db
+			.from('comments')
+			.where({ post_id })
+			.orderBy('comments.date_posted', 'desc');
+	},
 	insertComment(db, newComment) {
 		return db
 			.insert(newComment)
@@ -27,6 +33,12 @@ const CommentsService = {
 		return db('comments')
 			.where({ id })
 			.delete();
+	},
+	countCommentsForPost(db, post_id) {
+		return db
+			.count('id')
+			.from('comments')
+			.where({ post_id });
 	},
 	serializeComment(comment) {
 		return {

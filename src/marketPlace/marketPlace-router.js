@@ -35,13 +35,14 @@ marketPlaceRouter
 				next(err);
 			});
 	})
-	.get('/:catId', (req, res, next) => {
+	.get('/listings-by-cat/:market_place_cat', (req, res, next) => {
 		const db = req.app.get('db');
-		const { catId } = req.params;
-		MarketPlaceService.getAllListingsInCat(db, catId)
+		var { market_place_cat } = req.params;
+		market_place_cat = parseInt(market_place_cat, 10);
+		MarketPlaceService.getAllListingsByCat(db, market_place_cat)
 			.then(listings => {
-				if (!listings) {
-					return res.status(401).json({
+				if (listings.length === 0) {
+					return res.status(200).json({
 						error: 'There are no market place listing in this catagory.'
 					});
 				}
@@ -54,11 +55,12 @@ marketPlaceRouter
 	})
 	.get('/listings/:id', (req, res, next) => {
 		const db = req.app.get('db');
-		const { id } = req.params;
+		var { id } = req.params;
+		id = parseInt(id, 10);
 		MarketPlaceService.getListingById(db, id)
 			.then(listing => {
-				if (!listing) {
-					return res.status(401).json({
+				if (listing.length === 0) {
+					return res.status(200).json({
 						error: 'Listing does not exists.'
 					});
 				}
