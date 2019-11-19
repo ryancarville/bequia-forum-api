@@ -3,7 +3,6 @@ const AuthService = require("./auth-service");
 const authRouter = express.Router();
 
 authRouter
-
   .post("/", (req, res, next) => {
     const { email, user_name, password } = req.body;
     const logInUser = { email, user_name, password };
