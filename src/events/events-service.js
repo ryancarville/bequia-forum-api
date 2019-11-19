@@ -1,51 +1,54 @@
-const xss = require('xss');
+const xss = require("xss");
 
 const EventService = {
-	getALlEvents(db) {
-		return db.select('*').from('events');
-	},
-	getEventById(db, id) {
-		return db
-			.from('events')
-			.where({ id })
-			.first();
-	},
-	insertEvent(db, newEvent) {
-		return db
-			.into('events')
-			.insert(newEvent)
-			.returning('*')
-			.then(rows => rows[0]);
-	},
-	updateEvent(db, updatedEvent) {
-		return db
-			.into('events')
-			.where({ id: updatedEvent.id })
-			.update(updatedEvent);
-	},
-	deleteEvent(db, id) {
-		return db
-			.from('events')
-			.where({ id })
-			.delete();
-	},
-	sortListings(db) {
-		return db
-			.select('*')
-			.from('events')
-			.orderBy('title', 'asc');
-	},
-	serializeEvent(event) {
-		return {
-			id: event.id,
-			userid: event.userid,
-			title: xss(event.title),
-			description: xss(event.description),
-			location: xss(event.location),
-			eventdate: xss(event.eventDate),
-			eventtime: xss(event.eventTime),
-			dateposted: xss(event.datePosted)
-		};
-	}
+  getALlEvents(db) {
+    return db.select("*").from("events");
+  },
+  getEventById(db, id) {
+    return db
+      .from("events")
+      .where({ id })
+      .first();
+  },
+  insertEvent(db, newEvent) {
+    return db
+      .into("events")
+      .insert(newEvent)
+      .returning("*")
+      .then(rows => rows[0]);
+  },
+  getThisWeeksEvents(db, today, nextWeek) {
+    return db.from("events").whereBetween("event_date", [today, nextWeek]);
+  },
+  updateEvent(db, updatedEvent) {
+    return db
+      .into("events")
+      .where({ id: updatedEvent.id })
+      .update(updatedEvent);
+  },
+  deleteEvent(db, id) {
+    return db
+      .from("events")
+      .where({ id })
+      .delete();
+  },
+  sortListings(db) {
+    return db
+      .select("*")
+      .from("events")
+      .orderBy("title", "asc");
+  },
+  serializeEvent(event) {
+    return {
+      id: event.id,
+      userid: event.userid,
+      title: xss(event.title),
+      description: xss(event.description),
+      location: xss(event.location),
+      eventdate: xss(event.eventDate),
+      eventtime: xss(event.eventTime),
+      dateposted: xss(event.datePosted)
+    };
+  }
 };
 module.exports = EventService;
