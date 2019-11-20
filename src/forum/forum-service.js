@@ -63,7 +63,10 @@ const ForumService = {
       .limit(8);
   },
   getBoardPosts(db, board_id) {
-    return db.from("messageboard_posts").where({ board_id });
+    return db
+      .select("*")
+      .from("messageboard_posts")
+      .where({ board_id });
   },
   getPostById(db, id) {
     return db

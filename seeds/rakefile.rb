@@ -113,12 +113,12 @@ VALUES
 INSERT INTO job_cats
     (name, description, img_url)
 VALUES
-    ('Hospitality', 'Jobs in Hotel, Resturant, Bar, Cartering services.', 'https://bequiaforum.com/images/hospitality-icon.png'),
-    ('Marine', 'Jobs in anything sea/sailing related.', 'https://bequiaforum.com/images/marine-icon.png'),
-    ('Wellness/Beauty', 'Jobs related to the body thearpies, beauty and/or health.', 'https://bequiaforum.com/images/wellness-icon.png'),
-    ('Professional Services', 'Jobs that require a high level of skill.  i.e. Architech, Finacial Services, Property Manager, etc.', 'https://bequiaforum.com/images/professional-icon.png'),
-    ('Construction', 'Jobs in commercial and/or residential building. Labor skills only.', 'https://bequiaforum.com/images/construction-icon.png'),
-    ('Special Skills', 'Jobs that do not fall under any other catagory.', 'https://bequiaforum.com/images/special-skills-icon.png');
+    ('Hospitality', 'Jobs in Hotel, Resturant, Bar, Cartering services.', '../icons/hospitality-icon.png'),
+    ('Marine', 'Jobs in anything sea/sailing related.', '../icons/marine-icon.png'),
+    ('Wellness/Beauty', 'Jobs related to the body thearpies, beauty and/or health.', '../icons/wellness-icon.png'),
+    ('Professional Services', 'Jobs that require a high level of skill.  i.e. Architech, Finacial Services, Property Manager, etc.', '../icons/professional-icon.png'),
+    ('Construction', 'Jobs in commercial and/or residential building. Labor skills only.', '../icons/construction-icon.png'),
+    ('Special Skills', 'Jobs that do not fall under any other catagory.', '../icons/special-skills-icon.png');
 
 INSERT INTO jobs
     (job_cat, user_id, title, description, employment, location, date_posted)
@@ -129,30 +129,30 @@ VALUES
 INSERT INTO rental_cats
     (name, description, img_path)
 VALUES
-    ('Apartment', 'By Owner or Company', 'https://bequiaforum.com/images/JPEG/apartment.png'),
-    ('House', 'By Owner or Company', 'https://bequiaforum.com/images/JPEG/house.jpg'),
-    ('Boat', 'By Owner or Company', 'https://bequiaforum.com/images/JPEG/boat.jpg'),
-    ('Car', 'By Owner or Company', 'https://bequiaforum.com/images/JPEG/car.jpg'),
-    ('Tools', 'By Owner', 'https://bequiaforum.com/images/JPEG/tools.jpg'),
-    ('Sporting/Beach Equipment', 'By Owner', 'https://bequiaforum.com/images/JPEG/sporting.jpg'),
-    ('Miscelaneous', 'Everything else', 'https://bequiaforum.com/images/JPEG/misc.png');
+    ('Apartment', 'By Owner or Company', '../icons/JPEG/apartment.png'),
+    ('House', 'By Owner or Company', '../icons/JPEG/house.jpg'),
+    ('Boat', 'By Owner or Company', '../icons/JPEG/boat.jpg'),
+    ('Car', 'By Owner or Company', '../icons/JPEG/car.jpg'),
+    ('Tools', 'By Owner', '../icons/JPEG/tools.jpg'),
+    ('Sporting/Beach Equipment', 'By Owner', '../icons/JPEG/sporting.jpg'),
+    ('Miscelaneous', 'Everything else', '../icons/JPEG/misc.png');
 
 INSERT INTO rentals 
-    (rental_cat, user_id, title, description, location, price, contact_name, contact_email, contact_phone, airbnb, homeaway, booking_dot_com, other_site)
+    (rental_cat, user_id, title, description, location, contact_name, contact_email, contact_phone, airbnb, homeaway, booking_dot_com, other_site)
 VALUES
-    (2, 1, 'Calabash Villa - Luxury Home', 'Entire home for rent.  Finished to the highest standard.  Amazing Ocean views and private pool.','Upper Cammel - Bequia', '102','Ryan Carville', 'ryancarville@gmail.com', '+410791562329', 'https://www.airbnb.com', null, null, null),
-    (1, 2, 'Sea Shells Apartment', '2 bedroom apartment with beach access.  Lovely, quiet area.','Lower Bay', '0','Susan Lutz', 'susanLutz@gmail.com', '+17084569087', null, 'https://www.homeaway.com', null, 'https://www.bequia-apartmnet.com'),
-    (3, 1 , '35ft Power Boat', 'Gorgoues and powerful speeed boat for rent.  Can hire a driver at additional expense.', 'Saint Vincent','291', 'Michael Baptise', 'mBoat@aol.com', '+17082345398', null, null, null, 'https://www.michaeltours.com');
+    (2, 1, 'Calabash Villa - Luxury Home', 'Entire home for rent.  Finished to the highest standard.  Amazing Ocean views and private pool.','Upper Cammel - Bequia', 'Ryan Carville', 'ryancarville@gmail.com', '+410791562329', 'https://www.airbnb.com', null, null, null),
+    (1, 2, 'Sea Shells Apartment', '2 bedroom apartment with beach access.  Lovely, quiet area.','Lower Bay', 'Susan Lutz', 'susanLutz@gmail.com', '+17084569087', null, 'https://www.homeaway.com', null, 'https://www.bequia-apartmnet.com'),
+    (3, 1 , '35ft Power Boat', 'Gorgoues and powerful speeed boat for rent.  Can hire a driver at additional expense.', 'Saint Vincent', 'Michael Baptise', 'mBoat@aol.com', '+17082345398', null, null, null, 'https://www.michaeltours.com');
 
 INSERT INTO market_place_cats
     (name, description, img_path)
 VALUES
-    ('Items for Sale', 'Sell whatever you like.', 'https://bequiaforum.com/images/JPEG/for-sale.png'),
-    ('Items Wanted', 'Looking to buy something? Post it here.', 'https://bequiaforum.com/images/JPEG/items-wanted.png'),
-    ('Motor Vehicles', 'All engine based vheicles only.', 'https://bequiaforum.com/images/JPEG/vehicle-for-sale.png'),
-    ('Free Stuff', 'Not worth selling?  Just give it away.', 'https://bequiaforum.com/images/JPEG/free-stuff.png'),
-    ('Property For Sale', 'Properties for sale.', 'https://bequiaforum.com/images/JPEG/property-for-sale.png'),
-    ('Property Wanted', 'Looking to buy or rent a property? Look no further.', 'https://bequiaforum.com/images/JPEG/property-looking.png');
+    ('Items for Sale', 'Sell whatever you like.', '../icons/JPEG/for-sale.png'),
+    ('Items Wanted', 'Looking to buy something? Post it here.', '../icons/JPEG/items-wanted.png'),
+    ('Cars/Trucks/Boats/Bikes', 'All engine based vheicles only.', '../icons/JPEG/vehicle-for-sale.png'),
+    ('Free Stuff', 'Not worth selling?  Just give it away.', '../icons/JPEG/free-stuff.png'),
+    ('Property For Sale', 'Properties for sale.', '../icons/JPEG/property-for-sale.png'),
+    ('Property Wanted', 'Looking to buy or rent a property? Look no further.', '../icons/JPEG/property-looking.png');
 
 INSERT INTO market_place
     (market_place_cat, user_id, title, description, location, price, contact_name, contact_email, contact_phone)
