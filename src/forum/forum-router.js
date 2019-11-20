@@ -201,7 +201,7 @@ forumRouter
   .get("/search/posts/:term", (req, res, next) => {
     const db = req.app.get("db");
     var { term } = req.params;
-    let posts = [];
+    let posts = [{ siteSearch: true }];
     ForumService.searchAllBoardPosts(db, term)
       .then(mbPosts => {
         if (mbPosts.length === 0) {
