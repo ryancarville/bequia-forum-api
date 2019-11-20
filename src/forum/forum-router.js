@@ -256,7 +256,7 @@ forumRouter
     var { board_id, term } = req.params;
     let board_name;
     ForumService.getForumNameById(db, board_id).then(name => {
-      board_name = name;
+      board_name = name.name;
     });
     ForumService.searchBoardPosts(db, board_id, term)
       .then(posts => {
