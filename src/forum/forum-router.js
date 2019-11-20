@@ -258,7 +258,7 @@ forumRouter
       .then(posts => {
         if (posts.length === 0) {
           return res.status(404).json({
-            message: `There are no search results with the term '${term}'`
+            message: `There are no search results with the term '${term}' in that section.`
           });
         }
         console.log(posts);
