@@ -206,38 +206,46 @@ forumRouter
       .then(mbPosts => {
         if (mbPosts.length === 0) {
           return;
+        } else {
+          posts.push({ mbPosts: mbPosts });
         }
-        posts.push({ mbPosts: mbPosts });
       })
       .then(() => {
-        return ForumService.searchMarketPlace(db, term);
-      })
-      .then(mpPosts => {
-        if (mpPosts.length === 0) {
-          return;
-        }
-        posts.push({ mpPosts: mpPosts });
-      })
-      .then(() => {
-        return ForumService.searchRentals(db, term);
-      })
-      .then(rPosts => {
-        if (rPosts.length === 0) {
-          return;
-        }
-        posts.push({ rPosts: rPosts });
+        return ForumService.searchMarketPlace(db, term).then(mpPosts => {
+          if (mpPosts.length === 0) {
+            return;
+          } else {
+            posts.push({ mpPosts: mpPosts });
+          }
+        });
       })
       .then(() => {
-        return ForumService.searchJobs(db, term);
+        return ForumService.searchRentals(db, term).then(rPosts => {
+          if (rPosts.length === 0) {
+            return;
+          } else {
+            posts.push({ rPosts: rPosts });
+          }
+        });
       })
-      .then(jPosts => {
-        if (jPosts.length === 0) {
+      .then(() => {
+        return ForumService.searchJobs(db, term).then(jPosts => {
+          if (jPosts.length === 0) {
+            return;
+          } else {
+            posts.push({ jPosts: jPosts });
+          }
+        });
+      })
+      .then(() => {
+        if (posts.length === 0) {
+          return res
+            .status(404)
+            .json({ message: `There are no posts with the term '${term}'.` });
+        } else {
           return res.status(200).json(posts);
         }
-        posts.push({ jPosts: jPosts });
-        return res.status(200).json(posts);
       })
-
       .catch(err => {
         console.log(err);
         next(err);
