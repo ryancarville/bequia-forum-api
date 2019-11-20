@@ -248,10 +248,10 @@ forumRouter
     var { board_id, term } = req.params;
     ForumService.searchBoardPosts(db, board_id, term)
       .then(posts => {
-        if (!posts) {
-          return res
-            .status(404)
-            .json({ error: `There are no posts with the term ${term}` });
+        if (posts.length === 0) {
+          return res.status(404).json({
+            message: `There are no search results with the term '${term}'`
+          });
         }
         console.log(posts);
 
