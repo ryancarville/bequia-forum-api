@@ -238,7 +238,7 @@ forumRouter
         });
       })
       .then(() => {
-        if (posts.length === 0) {
+        if (posts.length > 1) {
           return res
             .status(404)
             .json({ message: `There are no posts with the term '${term}'.` });
