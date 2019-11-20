@@ -254,11 +254,15 @@ forumRouter
   .get("/search/posts/:board_id/:term", (req, res, next) => {
     const db = req.app.get("db");
     var { board_id, term } = req.params;
+    let board_name;
+    ForumService.getForumNameById(db, board_id).then(name => {
+      board_name = name;
+    });
     ForumService.searchBoardPosts(db, board_id, term)
       .then(posts => {
         if (posts.length === 0) {
           return res.status(404).json({
-            message: `There are no search results with the term '${term}' in that section.`
+            message: `There are no search results with the term '${term}' in ${board_name}.`
           });
         }
         console.log(posts);
