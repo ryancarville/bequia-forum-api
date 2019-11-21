@@ -66,7 +66,8 @@ const ForumService = {
     return db
       .select("*")
       .from("messageboard_posts")
-      .where({ board_id });
+      .where({ board_id })
+      .orderBy("desc", "date_posted");
   },
   getPostById(db, id) {
     return db
