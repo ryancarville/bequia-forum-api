@@ -57,10 +57,14 @@ const RentalsService = {
       description: xss(listing.description),
       location: xss(listing.location),
       price: xss(listing.price),
-      contactname: xss(listing.contact_name),
-      contactemail: xss(listing.contact_email),
-      contactphone: xss(listing.contact_phone),
-      dateposted: listing.date_posted
+      contact_name: xss(listing.contact_name),
+      contact_email: xss(listing.contact_email),
+      contact_phone: xss(listing.contact_phone),
+      date_posted: listing.date_posted,
+      airbnb: xss(listing.airbnb),
+      homeaway: xss(listing.homeaway),
+      booking_dot_com: xss(listing.booking_dot_com),
+      other_site: xss(listing.other_site)
     };
   }
 };
