@@ -120,7 +120,7 @@ forumRouter
         if (posts.length < 0) {
           return;
         }
-        userPosts.push({ mbPosts: posts });
+        userPosts.push(posts);
       })
       .then(() => {
         ForumService.getUserJobListings(db, user_id)
@@ -128,7 +128,7 @@ forumRouter
             if (listings.length < 0) {
               return;
             }
-            userPosts.push({ jPosts: listings });
+            userPosts.push(listings);
           })
           .then(() => {
             ForumService.getUserRentalPosts(db, user_id)
@@ -136,7 +136,7 @@ forumRouter
                 if (listings.length < 0) {
                   return;
                 }
-                userPosts.push({ rPosts: listings });
+                userPosts.push(listings);
               })
               .then(() => {
                 ForumService.getUserMarketPlacePosts(db, user_id)
@@ -144,7 +144,7 @@ forumRouter
                     if (listings.length < 0) {
                       return;
                     }
-                    userPosts.push({ mpPosts: listings });
+                    userPosts.push(listings);
                   })
                   .then(() => {
                     if (userPosts === {}) {
