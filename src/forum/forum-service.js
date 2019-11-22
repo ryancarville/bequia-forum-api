@@ -54,6 +54,18 @@ const ForumService = {
       .where({ board_id })
       .orderBy("date_posted", "desc");
   },
+  getUserPosts(db, user_id) {
+    return db.from("messageboard_posts").where({ user_id });
+  },
+  getUserJobListings(db, user_id) {
+    return db.from("jobs").where({ user_id });
+  },
+  getUserRentalPosts(db, user_id) {
+    return db.from("rentals").where({ user_id });
+  },
+  getUserMarketPlacePosts(db, user_id) {
+    return db.from("market_place").where({ user_id });
+  },
   getPostById(db, id) {
     return db
       .from("messageboard_posts")

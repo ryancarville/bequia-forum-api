@@ -111,6 +111,57 @@ forumRouter
         next(err);
       });
   })
+  .get("/get-user-posts/:user_id", (req, res, next) => {
+    const db = req.app.get("db");
+    const { user_id } = req.params;
+    const userPosts = {};
+    ForumService.getUserPosts(db, user_id)
+      .then(posts => {
+        if (posts.length < 0) {
+          return;
+        }
+        userPosts.mbPosts = posts;
+      })
+      .then(() => {
+        ForumService.getUserJobListings(db, user_id)
+          .then(listings => {
+            if (listings.length < 0) {
+              return;
+            }
+            userPosts.jPosts = listings;
+          })
+          .then(() => {
+            ForumService.getUserRentalPosts(db, user_id)
+              .then(listings => {
+                if (listings.length < 0) {
+                  return;
+                }
+                userPosts.rPosts = listings;
+              })
+              .then(() => {
+                ForumService.getUserMarketPlacePosts(db, user_id)
+                  .then(listings => {
+                    if (listings.length < 0) {
+                      return;
+                    }
+                    userPosts.mpPosts = listings;
+                  })
+                  .then(() => {
+                    if (userPosts === {}) {
+                      return res
+                        .status(404)
+                        .json({ message: "You have no posts." });
+                    }
+                    return res.status(200).json(userPosts);
+                  });
+              });
+          });
+      })
+      .catch(err => {
+        console.log(err);
+        next(err);
+      });
+  })
   .get("/numOfThreads/:board_id", (req, res, next) => {
     const db = req.app.get("db");
     const { board_id } = req.params;
