@@ -56,43 +56,6 @@ jobsRouter
         next(err);
       });
   })
-  .get("/sort/:column/:sortType", (req, res, next) => {
-    const db = req.app.get("db");
-    const { column, sortType } = req.params;
-    if (column === "employment") {
-      const temp = sortType.split("%20");
-      const employType = temp.join(" ");
-      JobsService.sortJobsByEmployment(db, employType)
-        .then(jobs => {
-          console.log(jobs);
-          if (!jobs) {
-            return res.status(404).json({
-              message: `There are no current ${sortType} job listings.`
-            });
-          }
-
-          return res.status(200).json(jobs);
-        })
-        .catch(err => {
-          console.log(err);
-          next(err);
-        });
-    } else {
-      JobsService.sortJobs(db, column, sortType)
-        .then(jobs => {
-          if (!jobs) {
-            return res
-              .status(401)
-              .json({ error: "Something went wrong sorting the directory." });
-          }
-          return res.status(200).json(jobs);
-        })
-        .catch(err => {
-          console.log(err);
-          next(err);
-        });
-    }
-  })
   .post("/addJob", (req, res, next) => {
     const db = req.app.get("db");
     const {

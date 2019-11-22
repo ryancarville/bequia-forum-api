@@ -29,22 +29,7 @@ const ForumService = {
       .from("messageboard_posts")
       .where({ board_id });
   },
-  getAllMessageBoardPosts(db) {
-    return db
-      .select(
-        "messageboard_posts.id",
-        "messageboard_posts.user_id",
-        "messageboard_posts.board_id",
-        "messageboard_posts.title",
-        "messageboard_posts.content",
-        "messageboard_posts.date_posted",
-        "messageboard_posts.likes",
-        "users.user_name"
-      )
-      .from("messageboard_posts")
-      .orderBy("date_posted", "desc")
-      .innerJoin("users", "messageboard_posts.user_id", "=", "users.id");
-  },
+
   getNewestPosts(db) {
     return db
       .select(
@@ -171,9 +156,6 @@ const ForumService = {
     return db("likes_tracker")
       .where({ user_id: info.user_id, post_id: info.post_id })
       .delete();
-  },
-  sortPosts(db, column, sort) {
-    return db("messageboard_posts").orderBy(column, sort);
   },
   serializePost(newPost) {
     return {

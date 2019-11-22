@@ -165,22 +165,6 @@ forumRouter
         next(err);
       });
   })
-  .get("/posts", (req, res, next) => {
-    const db = req.app.get("db");
-    ForumService.getAllMessageBoardPosts(db)
-      .then(posts => {
-        if (!posts) {
-          return res
-            .state(401)
-            .json({ error: "Something went wrong when retriving posts" });
-        }
-        return res.status(200).json(posts);
-      })
-      .catch(err => {
-        console.log(err);
-        next(err);
-      });
-  })
   .get("/get-posts-for/:board_id", (req, res, next) => {
     const db = req.app.get("db");
     const { board_id } = req.params;
@@ -285,23 +269,6 @@ forumRouter
           return res.status(401).json({ error: "Could not get likes tracker" });
         }
         return res.status(200).json(tracker);
-      })
-      .catch(err => {
-        console.log(err);
-        next(err);
-      });
-  })
-  .get("/sort/:column/:sortType", (req, res, next) => {
-    const db = req.app.get("db");
-    const { column, sortType } = req.params;
-    ForumService.sortPosts(db, column, sortType)
-      .then(dir => {
-        if (!dir) {
-          return res
-            .status(401)
-            .json({ error: "Something went wrong sorting the directory." });
-        }
-        return res.status(200).json(dir);
       })
       .catch(err => {
         console.log(err);

@@ -18,7 +18,6 @@ const JobsService = {
       .select("*")
       .from("jobs")
       .where({ id })
-
       .first();
   },
   insertJob(db, newJob) {
@@ -33,14 +32,6 @@ const JobsService = {
       .from("jobs")
       .where({ id: updatedJob.id })
       .update(updatedJob);
-  },
-  sortJobs(db, column, sort) {
-    return db("jobs").orderBy(column, sort);
-  },
-  sortJobsByEmployment(db, sort) {
-    return db("jobs")
-      .where({ employment: sort })
-      .orderBy("date_posted", "desc");
   },
   deleteJob(db, id) {
     return db
