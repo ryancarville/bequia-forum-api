@@ -114,13 +114,13 @@ forumRouter
   .get("/get-user-posts/:user_id", (req, res, next) => {
     const db = req.app.get("db");
     const { user_id } = req.params;
-    const userPosts = {};
+    const userPosts = [];
     ForumService.getUserPosts(db, user_id)
       .then(posts => {
         if (posts.length < 0) {
           return;
         }
-        userPosts.mbPosts = posts;
+        userPosts.push({ mbPosts: posts });
       })
       .then(() => {
         ForumService.getUserJobListings(db, user_id)
@@ -128,7 +128,7 @@ forumRouter
             if (listings.length < 0) {
               return;
             }
-            userPosts.jPosts = listings;
+            userPosts.push({ jPosts: listings });
           })
           .then(() => {
             ForumService.getUserRentalPosts(db, user_id)
@@ -136,7 +136,7 @@ forumRouter
                 if (listings.length < 0) {
                   return;
                 }
-                userPosts.rPosts = listings;
+                userPosts.push({ rPosts: listings });
               })
               .then(() => {
                 ForumService.getUserMarketPlacePosts(db, user_id)
@@ -144,7 +144,7 @@ forumRouter
                     if (listings.length < 0) {
                       return;
                     }
-                    userPosts.mpPosts = listings;
+                    userPosts.push({ mpPosts: listings });
                   })
                   .then(() => {
                     if (userPosts === {}) {
