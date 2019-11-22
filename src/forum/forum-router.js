@@ -120,7 +120,7 @@ forumRouter
         if (posts.length < 0) {
           return;
         }
-        userPosts.push(posts);
+        userPosts.push({ mbPosts: posts });
       })
       .then(() => {
         ForumService.getUserJobListings(db, user_id)
@@ -128,7 +128,7 @@ forumRouter
             if (listings.length < 0) {
               return;
             }
-            userPosts.push(listings);
+            userPosts.push({ jPosts: listings });
           })
           .then(() => {
             ForumService.getUserRentalPosts(db, user_id)
@@ -136,7 +136,7 @@ forumRouter
                 if (listings.length < 0) {
                   return;
                 }
-                userPosts.push(listings);
+                userPosts.push({ rPosts: listings });
               })
               .then(() => {
                 ForumService.getUserMarketPlacePosts(db, user_id)
@@ -144,10 +144,10 @@ forumRouter
                     if (listings.length < 0) {
                       return;
                     }
-                    userPosts.push(listings);
+                    userPosts.push({ mpPosts: listings });
                   })
                   .then(() => {
-                    if (userPosts === {}) {
+                    if (userPosts.length < 0) {
                       return res
                         .status(404)
                         .json({ message: "You have no posts." });
