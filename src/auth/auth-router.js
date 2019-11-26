@@ -78,9 +78,7 @@ authRouter
     const verfiy = AuthService.verifyJwt(token);
     console.log(verfiy);
     if (verfiy.message === "jwt expired") {
-      return res
-        .status(400)
-        .json({ error: "Unauthorized Access.  Token has expired." });
+      return res.status(400).json(verfiy.message);
     } else {
       return res.send({
         user_id: verfiy.user_id,
