@@ -90,7 +90,7 @@ describe("Forum API", () => {
       .send(db)
       .expect(200);
   });
-  it("GET /forum//get-posts-for/:board_id responds with 200 and all posts for board", () => {
+  it("GET /forum/get-posts-for/:board_id responds with 200 and all posts for board", () => {
     const board_id = 2;
     return supertest(app)
       .get(`/forum/get-posts-for/${board_id}`)

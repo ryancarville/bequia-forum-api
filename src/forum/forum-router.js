@@ -46,7 +46,7 @@ forumRouter
       .then(boardName => {
         if (boardName.length === 0) {
           return res.status(200).json({
-            error: `There are no boards for that section`
+            error: `There are no boards for that section.`
           });
         }
         console.log(boardName);
@@ -65,7 +65,7 @@ forumRouter
       .then(boardName => {
         if (boardName.length === 0) {
           return res.status(200).json({
-            error: `There are no boards for that section`
+            error: `There are no boards for that section.`
           });
         }
         console.log(boardName);
@@ -84,7 +84,7 @@ forumRouter
       .then(boardPosts => {
         if (boardPosts.length === 0) {
           return res.status(200).json({
-            error: `There are no boards for that section`
+            error: `There are no boards for that section.`
           });
         }
         console.log(boardPosts);
@@ -102,7 +102,7 @@ forumRouter
         if (!posts) {
           return res
             .state(401)
-            .json({ error: "Something went wrong when retriving posts" });
+            .json({ error: "Something went wrong when retriving posts." });
         }
         return res.status(200).json(posts);
       })
@@ -170,7 +170,7 @@ forumRouter
         if (!numOfThreads) {
           return res
             .status(404)
-            .json({ error: "Message Board does not exist" });
+            .json({ error: "Message Board does not exist." });
         }
         return res.status(200).json(numOfThreads);
       })
@@ -206,7 +206,7 @@ forumRouter
       .then(boards => {
         if (boards.length === 0) {
           return res.status(200).json({
-            error: `There are no boards for that section`
+            error: `There are no boards for that section.`
           });
         }
         return res.status(200).json(boards);
@@ -216,23 +216,7 @@ forumRouter
         next(err);
       });
   })
-  .get("/get-posts-for/:board_id", (req, res, next) => {
-    const db = req.app.get("db");
-    const { board_id } = req.params;
-    ForumService.getSpecificBoardPosts(db, board_id)
-      .then(posts => {
-        if (!posts) {
-          return res
-            .status(401)
-            .json({ error: "There are no posts for this board." });
-        }
-        return res.status(200).json(posts);
-      })
-      .catch(err => {
-        console.log(err);
-        next(err);
-      });
-  })
+
   .get("/search/posts/:term", (req, res, next) => {
     const db = req.app.get("db");
     var { term } = req.params;
@@ -317,7 +301,9 @@ forumRouter
     ForumService.getLikesTracker(db, user_id, post_id)
       .then(tracker => {
         if (!tracker) {
-          return res.status(401).json({ error: "Could not get likes tracker" });
+          return res
+            .status(401)
+            .json({ error: "Could not get likes tracker." });
         }
         return res.status(200).json(tracker);
       })
@@ -433,7 +419,7 @@ forumRouter
       if (!req.body[feild]) {
         return res
           .status(401)
-          .json({ error: `Request body must contain ${feild}` });
+          .json({ error: `Request body must contain ${feild}.` });
       }
     ForumService.addTrackerInfo(db, newInfo)
       .then(row => {
@@ -458,7 +444,7 @@ forumRouter
       if (!req.body[feild]) {
         return res
           .status(401)
-          .json({ error: `Request body must contain ${feild}` });
+          .json({ error: `Request body must contain ${feild}.` });
       }
     ForumService.deleteTrackerInfo(db, infoToDelete)
       .then(rowsAffected => {
