@@ -1,8 +1,9 @@
 const express = require("express");
 const AuthService = require("./auth-service");
 const authRouter = express.Router();
-
+//auth router
 authRouter
+  //post login credentials to database
   .post("/", (req, res, next) => {
     const { email, user_name, password } = req.body;
     const logInUser = { email, user_name, password };
@@ -11,6 +12,7 @@ authRouter
         return res.status(40).json({ error: `Please enter a ${key}` });
       }
     }
+    //if user used email check creds
     if (logInUser.email) {
       AuthService.getUserWithEmail(req.app.get("db"), logInUser.email)
         .then(dbUser => {
@@ -40,6 +42,7 @@ authRouter
           next(err);
         });
     }
+    //if user used user name check creds
     if (logInUser.user_name) {
       AuthService.getUserWithUserName(req.app.get("db"), logInUser.user_name)
         .then(dbUser => {
@@ -70,13 +73,14 @@ authRouter
         });
     }
   })
+  //verify JWT token is valid
   .get("/verifyToken/:token", (req, res, next) => {
     const { token } = req.params;
     if (!token) {
       return res.status(401).json({ error: "Request must contain a token." });
     }
     const verfiy = AuthService.verifyJwt(token);
-    console.log(verfiy);
+
     if (verfiy.message === "jwt expired") {
       return res.status(400).json(verfiy.message);
     } else {
@@ -86,6 +90,7 @@ authRouter
       });
     }
   })
+  //if JWT is valid extend token
   .get("/token/extended/:old_token", (req, res, next) => {
     const { old_token } = req.params;
     const valid = AuthService.verifyJwt(old_token);

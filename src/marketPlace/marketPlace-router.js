@@ -1,8 +1,9 @@
 const express = require("express");
 const MarketPlaceService = require("./marketPlace-service");
 const marketPlaceRouter = express.Router();
-
+//market place router
 marketPlaceRouter
+  //get all market place catagories
   .get("/catagories", (req, res, next) => {
     const db = req.app.get("db");
     MarketPlaceService.getMarketPlaceCats(db)
@@ -19,7 +20,7 @@ marketPlaceRouter
         next(err);
       });
   })
-
+  //get all market place listing by catagory
   .get("/listings-by-cat/:market_place_cat", (req, res, next) => {
     const db = req.app.get("db");
     var { market_place_cat } = req.params;
@@ -38,6 +39,7 @@ marketPlaceRouter
         next(err);
       });
   })
+  //get market place by id
   .get("/listings/:id", (req, res, next) => {
     const db = req.app.get("db");
     var { id } = req.params;
@@ -56,6 +58,7 @@ marketPlaceRouter
         next(err);
       });
   })
+  //add listing
   .post("/addListing", (req, res, next) => {
     const db = req.app.get("db");
     const {
@@ -111,6 +114,7 @@ marketPlaceRouter
         next(err);
       });
   })
+  //edit listing
   .patch("/edit", (req, res, next) => {
     const db = req.app.get("db");
     const {
@@ -154,6 +158,7 @@ marketPlaceRouter
         next(err);
       });
   })
+  //delete listing
   .delete("/delete/:id", (req, res, next) => {
     const db = req.app.get("db");
     const { id } = req.params;
@@ -164,7 +169,7 @@ marketPlaceRouter
             .status(401)
             .json({ error: "No listing with that id exists." });
         }
-        return res.status(201).json(rowAffected);
+        return res.status(204).json(rowAffected);
       })
       .catch(err => {
         console.log(err);

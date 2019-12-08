@@ -2,18 +2,19 @@ const express = require("express");
 const path = require("path");
 const EventsService = require("./events-service");
 const eventsRouter = express.Router();
-const { requireAuth } = require("../middleware/jwt-auth");
-
-eventsRouter.get("/sort", (req, res, next) => {
-  const db = req.app.get("db");
-  EventsService.sortListings(db).then(sortedList => {
-    if (!sortedList) {
-      return res.status(401).josn({ error: "Sort could not be completed." });
-    }
-    return res.status(200).json(sortListings);
-  });
-});
+//events router
 eventsRouter
+  //sort evetns
+  .get("/sort", (req, res, next) => {
+    const db = req.app.get("db");
+    EventsService.sortListings(db).then(sortedList => {
+      if (!sortedList) {
+        return res.status(401).josn({ error: "Sort could not be completed." });
+      }
+      return res.status(200).json(sortListings);
+    });
+  })
+  //get all events
   .get("/", (req, res, next) => {
     const db = req.app.get("db");
     EventsService.getALlEvents(db)
@@ -30,6 +31,7 @@ eventsRouter
         next(err);
       });
   })
+  //get event by id
   .get("/:event_id", (req, res, next) => {
     const db = req.app.get("db");
     var { event_id } = req.params;
@@ -46,6 +48,7 @@ eventsRouter
         next(err);
       });
   })
+  //get this upcoming weeks events
   .get("/thisWeek/:today/:nextWeek", (req, res, next) => {
     const db = req.app.get("db");
     const { today, nextWeek } = req.params;
@@ -55,10 +58,11 @@ eventsRouter
           .status(200)
           .json({ error: `There are no events for this week.` });
       }
-      console.log(events);
+
       return res.status(200).json(events);
     });
   })
+  //add event
   .post("/addEvent", (req, res, next) => {
     const db = req.app.get("db");
     const {
@@ -108,9 +112,9 @@ eventsRouter
         next(err);
       });
   })
+  //edit event
   .patch("/edit", (req, res, next) => {
     const db = req.app.get("db");
-
     const {
       id,
       title,
@@ -133,7 +137,6 @@ eventsRouter
         error: `Request must contain title, description, location, event date or event time.`
       });
     }
-
     EventsService.updateEvent(db, eventToUpdate)
       .then(numRowsAffected => {
         if (!numRowsAffected) {
@@ -146,6 +149,7 @@ eventsRouter
         next(err);
       });
   })
+  //delete event
   .delete("/delete/:event_id", (req, res, next) => {
     const db = req.app.get("db");
     const { event_id } = req.params;

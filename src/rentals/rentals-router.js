@@ -1,8 +1,9 @@
 const express = require("express");
 const RentalsService = require("./rentals-service");
 const rentalRouter = express.Router();
-
+//rentals router
 rentalRouter
+  //get all rentals catagories
   .get("/catagories", (req, res, next) => {
     const db = req.app.get("db");
     RentalsService.getRentalCats(db)
@@ -19,6 +20,7 @@ rentalRouter
         next(err);
       });
   })
+  //get rentals catagory by id
   .get("/catagories/:id", (req, res, next) => {
     const db = req.app.get("db");
     const { id } = req.params;
@@ -41,6 +43,7 @@ rentalRouter
         next(err);
       });
   })
+  //get all rentals listings
   .get("/listings", (req, res, next) => {
     const db = req.app.get("db");
     RentalsService.getAllRentalListings(db)
@@ -57,14 +60,13 @@ rentalRouter
         next(err);
       });
   })
+  //get all rentals listing by catagory
   .get("/listings-by-cat/:rental_cat", (req, res, next) => {
     const db = req.app.get("db");
     var { rental_cat } = req.params;
-    console.log(rental_cat);
     rental_cat = parseInt(rental_cat, 10);
     RentalsService.getAllListingsByCat(db, rental_cat)
       .then(listings => {
-        console.log(listings);
         if (listings.length === 0) {
           return res.status(200).json({
             error: `There are no rental listings for this catagory.`
@@ -78,6 +80,7 @@ rentalRouter
         next(err);
       });
   })
+  //get rentals listing by id
   .get("/listing/:id", (req, res, next) => {
     const db = req.app.get("db");
     const { id } = req.params;
@@ -95,6 +98,7 @@ rentalRouter
         next(err);
       });
   })
+  //add listing
   .post("/addListing", (req, res, next) => {
     const db = req.app.get("db");
     const {
@@ -155,6 +159,7 @@ rentalRouter
         next(err);
       });
   })
+  //edit listing
   .patch("/edit", (req, res, next) => {
     const db = req.app.get("db");
     const {
@@ -210,6 +215,7 @@ rentalRouter
         next(err);
       });
   })
+  //delete listing
   .delete("/delete/:id", (req, res, next) => {
     const db = req.app.get("db");
     const { id } = req.params;

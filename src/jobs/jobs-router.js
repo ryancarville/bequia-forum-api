@@ -2,8 +2,9 @@ const express = require("express");
 const path = require("path");
 const JobsService = require("./jobs-service");
 const jobsRouter = express.Router();
-
+//jobs router
 jobsRouter
+  //get all job catagories
   .get("/catagories", (req, res, next) => {
     const db = req.app.get("db");
     JobsService.getAllJobCats(db)
@@ -20,6 +21,7 @@ jobsRouter
         next(err);
       });
   })
+  //get all listings for a catagory
   .get("/listings-by-cat/:job_cat", (req, res, next) => {
     const db = req.app.get("db");
     var { job_cat } = req.params;
@@ -38,6 +40,7 @@ jobsRouter
         next(err);
       });
   })
+  //get listing by id
   .get("/listings/:id", (req, res, next) => {
     const db = req.app.get("db");
     var { id } = req.params;
@@ -56,6 +59,7 @@ jobsRouter
         next(err);
       });
   })
+  //add listing
   .post("/addJob", (req, res, next) => {
     const db = req.app.get("db");
     const {
@@ -115,6 +119,7 @@ jobsRouter
         next(err);
       });
   })
+  //edit listing
   .patch("/edit", (req, res, next) => {
     const db = req.app.get("db");
     const {
@@ -164,6 +169,7 @@ jobsRouter
         next(err);
       });
   })
+  //deletle listing
   .delete("/delete/:id", (req, res, next) => {
     const db = req.app.get("db");
     const { id } = req.params;

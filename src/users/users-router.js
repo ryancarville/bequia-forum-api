@@ -1,8 +1,9 @@
 const epxress = require("express");
 const UserService = require("./users-service");
 const usersRouter = epxress.Router();
-
+//users router
 usersRouter
+  //get user by id
   .get("/:id", (req, res, next) => {
     const db = req.app.get("db");
     const { id } = req.params;
@@ -18,11 +19,11 @@ usersRouter
         next(err);
       });
   })
+  //get users username by id
   .get("/userName/:id", (req, res, next) => {
     const db = req.app.get("db");
     const { id } = req.params;
     const idNum = parseInt(id);
-    console.log(idNum);
     UserService.getUserName(db, idNum)
       .then(userName => {
         if (!userName) {

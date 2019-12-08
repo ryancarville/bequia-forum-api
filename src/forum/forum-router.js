@@ -2,9 +2,9 @@ const express = require("express");
 const path = require("path");
 const ForumService = require("./forum-service");
 const forumRouter = express.Router();
-const { requireAuth } = require("../middleware/jwt-auth");
-
+//forum router
 forumRouter
+  //get all forum catagoires
   .get("/catagories", (req, res, next) => {
     const db = req.app.get("db");
     ForumService.getMessageBoardSections(db)
@@ -21,6 +21,7 @@ forumRouter
         next(err);
       });
   })
+  //get all boards
   .get("/messageBoards", (req, res, next) => {
     const db = req.app.get("db");
     ForumService.getAllMessageBoards(db)
@@ -38,6 +39,7 @@ forumRouter
         next(err);
       });
   })
+  //get a message board by id
   .get("/messageboards/get-board/:id", (req, res, next) => {
     const db = req.app.get("db");
     var { id } = req.params;
@@ -49,7 +51,7 @@ forumRouter
             error: `There are no boards for that section.`
           });
         }
-        console.log(boardName);
+
         return res.status(200).json(boardName);
       })
       .catch(err => {
@@ -57,6 +59,7 @@ forumRouter
         next(err);
       });
   })
+  //get a message board's name
   .get("/messageboards/get-board-name/:id", (req, res, next) => {
     const db = req.app.get("db");
     var { id } = req.params;
@@ -68,7 +71,7 @@ forumRouter
             error: `There are no boards for that section.`
           });
         }
-        console.log(boardName);
+
         return res.status(200).json(boardName);
       })
       .catch(err => {
@@ -76,6 +79,7 @@ forumRouter
         next(err);
       });
   })
+  //get all posts for a message board by id
   .get("/messageboards/get-board-posts/:board_id", (req, res, next) => {
     const db = req.app.get("db");
     var { board_id } = req.params;
@@ -87,7 +91,7 @@ forumRouter
             error: `There are no boards for that section.`
           });
         }
-        console.log(boardPosts);
+
         return res.status(200).json(boardPosts);
       })
       .catch(err => {
@@ -95,6 +99,7 @@ forumRouter
         next(err);
       });
   })
+  //get the newest 8 posts
   .get("/newestPosts", (req, res, next) => {
     const db = req.app.get("db");
     ForumService.getNewestPosts(db)
@@ -111,6 +116,7 @@ forumRouter
         next(err);
       });
   })
+  //get all the posts for a single user
   .get("/get-user-posts/:user_id", (req, res, next) => {
     const db = req.app.get("db");
     const { user_id } = req.params;
@@ -162,6 +168,7 @@ forumRouter
         next(err);
       });
   })
+  //get the number of threads for a board
   .get("/numOfThreads/:board_id", (req, res, next) => {
     const db = req.app.get("db");
     const { board_id } = req.params;
@@ -179,6 +186,7 @@ forumRouter
         next(err);
       });
   })
+  //get a post by id
   .get("/messageboards/get-post-by-id/:id", (req, res, next) => {
     const db = req.app.get("db");
     var { id } = req.params;
@@ -198,6 +206,7 @@ forumRouter
         next(err);
       });
   })
+  //get a messageboard section by id
   .get("/messageboards/:messageboard_section", (req, res, next) => {
     const db = req.app.get("db");
     var { messageboard_section } = req.params;
@@ -216,7 +225,7 @@ forumRouter
         next(err);
       });
   })
-
+  //search the entire site but term
   .get("/search/posts/:term", (req, res, next) => {
     const db = req.app.get("db");
     var { term } = req.params;
@@ -270,6 +279,7 @@ forumRouter
         next(err);
       });
   })
+  //search a sepcific message board by term
   .get("/search/posts/:board_id/:term", (req, res, next) => {
     const db = req.app.get("db");
     var { board_id, term } = req.params;
@@ -284,7 +294,6 @@ forumRouter
             message: `There are no search results with the term '${term}' in ${board_name}.`
           });
         }
-        console.log(posts);
 
         return res.status(200).json({ specificBoard: posts });
       })
@@ -293,6 +302,7 @@ forumRouter
         next(err);
       });
   })
+  //check likes traker if user like post
   .get("/likesTracker/:user_id/:post_id", (req, res, next) => {
     const db = req.app.get("db");
     var { user_id, post_id } = req.params;
@@ -312,6 +322,7 @@ forumRouter
         next(err);
       });
   })
+  //add post
   .post("/addPost", (req, res, next) => {
     const db = req.app.get("db");
     const { board_id, user_id, title, content, date_posted, likes } = req.body;
@@ -345,6 +356,7 @@ forumRouter
         next(err);
       });
   })
+  //edit post
   .patch("/edit", (req, res, next) => {
     const db = req.app.get("db");
     const { id, board_id, title, content } = req.body;
@@ -367,6 +379,7 @@ forumRouter
         next(err);
       });
   })
+  //incremint like on a post
   .patch("/post/addLike/:post_id", (req, res, next) => {
     const db = req.app.get("db");
     const { post_id } = req.params;
@@ -389,6 +402,7 @@ forumRouter
         next(err);
       });
   })
+  //subtract likes from a post
   .patch("/post/minusLike/:post_id", (req, res, next) => {
     const db = req.app.get("db");
     const { post_id } = req.params;
@@ -411,6 +425,7 @@ forumRouter
         next(err);
       });
   })
+  //add user and post pairing to like tracker
   .post("/post/addToTracker", (req, res, next) => {
     const db = req.app.get("db");
     const { post_id, user_id } = req.body;
@@ -435,11 +450,12 @@ forumRouter
         next(err);
       });
   })
+  //delete user and post paring from tracker
   .delete("/post/deleteFromTracker", (req, res, next) => {
     const db = req.app.get("db");
     const { post_id, user_id } = req.body;
     const infoToDelete = { post_id, user_id };
-    console.log(infoToDelete);
+
     for (const feild of ["post_id", "user_id"])
       if (!req.body[feild]) {
         return res
@@ -448,7 +464,6 @@ forumRouter
       }
     ForumService.deleteTrackerInfo(db, infoToDelete)
       .then(rowsAffected => {
-        console.log(rowsAffected);
         if (!rowsAffected) {
           return res
             .status(401)
@@ -461,6 +476,7 @@ forumRouter
         next(err);
       });
   })
+  //delete post
   .delete("/posts/:post_id", (req, res, next) => {
     const db = req.app.get("db");
     var { post_id } = req.params;

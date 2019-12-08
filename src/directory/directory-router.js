@@ -1,8 +1,9 @@
 const express = require('express');
 const DirectoryService = require('./directory-service');
 const directoryRouter = express.Router();
-
+//directory router
 directoryRouter
+	//get all directory listings
 	.get('/', (req, res, next) => {
 		const db = req.app.get('db');
 		DirectoryService.getAllListings(db)
@@ -19,6 +20,7 @@ directoryRouter
 				next(err);
 			});
 	})
+	//add directory listing
 	.post('/addListing', (req, res, next) => {
 		const db = req.app.get('db');
 		const {
@@ -62,6 +64,7 @@ directoryRouter
 				next(err);
 			});
 	})
+	//delete driectory listingß
 	.delete('/delete/:listingId', (req, res, next) => {
 		const db = req.app.get('db');
 		const { listingId } = req.params;
