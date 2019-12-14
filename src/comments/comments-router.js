@@ -23,7 +23,7 @@ commentsRouter
       });
   })
   //get number of comments for a post
-  .get("/count-coumments/:post_id", (req, res, next) => {
+  .get("/count-comments/:post_id", (req, res, next) => {
     const db = req.app.get("db");
     var { post_id } = req.params;
     post_id = parseInt(post_id, 10);
