@@ -4,14 +4,14 @@ const ForumService = require("./forum-service");
 const forumRouter = express.Router();
 //forum router
 forumRouter
-  //get all forum catagoires
+  //get all forum catagories
   .get("/catagories", (req, res, next) => {
     const db = req.app.get("db");
     ForumService.getMessageBoardSections(db)
       .then(sections => {
         if (!sections) {
           return res.status(401).json({
-            error: "Something went wrong when retriving message board sections."
+            error: "Something went wrong when retrieving message board sections."
           });
         }
         return res.status(200).json(sections);
@@ -28,10 +28,9 @@ forumRouter
       .then(boards => {
         if (!boards) {
           return res.status(500).json({
-            error: "Something went wrong when retriving the message boards."
+            error: "Something went wrong when retrieving the message boards."
           });
         }
-
         return res.status(200).json(boards);
       })
       .catch(err => {
@@ -206,7 +205,7 @@ forumRouter
         next(err);
       });
   })
-  //get a messageboard section by id
+  //get a message board section by id
   .get("/messageboards/:messageboard_section", (req, res, next) => {
     const db = req.app.get("db");
     var { messageboard_section } = req.params;
@@ -327,17 +326,17 @@ forumRouter
     const db = req.app.get("db");
     const { board_id, user_id, title, content, date_posted, likes } = req.body;
     const newPost = { board_id, user_id, title, content, date_posted, likes };
-    for (const feild of [
+    for (const field of [
       "board_id",
       "user_id",
       "title",
       "content",
       "date_posted"
     ])
-      if (!req.body[feild]) {
+      if (!req.body[field]) {
         return res
           .status(401)
-          .json({ error: `Must contain ${feild} in request body.` });
+          .json({ error: `Must contain ${field} in request body.` });
       }
     ForumService.insertPost(db, newPost)
       .then(post => {
@@ -480,11 +479,11 @@ forumRouter
   .delete("/posts/:post_id", (req, res, next) => {
     const db = req.app.get("db");
     var { post_id } = req.params;
-    postid = parseInt(post_id);
+    post_id = parseInt(post_id);
     ForumService.deletePost(db, post_id)
       .then(rowAffected => {
         if (!rowAffected) {
-          return res.status(401).json({ error: `Post doesn't exsist.` });
+          return res.status(401).json({ error: `Post doesn't exist.` });
         }
         res.status(201).json(rowAffected);
       })
