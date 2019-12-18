@@ -11,7 +11,8 @@ forumRouter
       .then(sections => {
         if (!sections) {
           return res.status(401).json({
-            error: "Something went wrong when retrieving message board sections."
+            error:
+              "Something went wrong when retrieving message board sections."
           });
         }
         return res.status(200).json(sections);
@@ -313,6 +314,8 @@ forumRouter
           return res
             .status(401)
             .json({ error: "Could not get likes tracker." });
+        } else if (tracker === "") {
+          return res.status(201).json({ message: "Not content" });
         }
         return res.status(200).json(tracker);
       })
