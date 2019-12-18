@@ -302,7 +302,7 @@ forumRouter
         next(err);
       });
   })
-  //check likes traker if user like post
+  //check likes tracker if user like post
   .get("/likesTracker/:user_id/:post_id", (req, res, next) => {
     const db = req.app.get("db");
     var { user_id, post_id } = req.params;
@@ -455,14 +455,15 @@ forumRouter
   //delete user and post paring from tracker
   .delete("/post/deleteFromTracker", (req, res, next) => {
     const db = req.app.get("db");
+    console.log(res.body);
     const { post_id, user_id } = req.body;
     const infoToDelete = { post_id, user_id };
 
-    for (const feild of ["post_id", "user_id"])
-      if (!req.body[feild]) {
+    for (const field of ["post_id", "user_id"])
+      if (!req.body[field]) {
         return res
           .status(401)
-          .json({ error: `Request body must contain ${feild}.` });
+          .json({ error: `Request body must contain ${field}.` });
       }
     ForumService.deleteTrackerInfo(db, infoToDelete)
       .then(rowsAffected => {
