@@ -455,7 +455,6 @@ forumRouter
   //delete user and post paring from tracker
   .delete("/post/deleteFromTracker", (req, res, next) => {
     const db = req.app.get("db");
-    console.log(res.body);
     const { post_id, user_id } = req.body;
     const infoToDelete = { post_id, user_id };
 

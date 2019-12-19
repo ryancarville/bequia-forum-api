@@ -45,7 +45,7 @@ const ForumService = {
       .from("messageboard_posts")
       .innerJoin("users", "messageboard_posts.user_id", "=", "users.id")
       .orderBy("date_posted", "desc")
-      .limit(8);
+      .limit(20);
   },
   getBoardPosts(db, board_id) {
     return db
