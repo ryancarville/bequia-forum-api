@@ -48,6 +48,12 @@ eventsRouter
         next(err);
       });
   })
+  //get all events bu user id
+  .get("/user/:id", (req, res, next) => {
+    const db = req.app.get(db);
+    const { id } = req.params;
+    EventServices.getAllEventsByUser(id);
+  })
   //get this upcoming weeks events
   .get("/thisWeek/:today/:nextWeek", (req, res, next) => {
     const db = req.app.get("db");

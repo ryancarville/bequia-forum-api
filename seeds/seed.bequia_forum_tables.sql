@@ -106,9 +106,9 @@ VALUES
 INSERT INTO events
     (user_id, title, location, description, event_date, event_time, date_posted)
 VALUES
-    (1, 'Hairouns on the beach!', 'Lower Bay', 'Join us for beers and lobsters on lower bay. Family friendly.', '2019-10-23', '16:00 - 22:00', '2019-10-12'),
-    (2, 'Almond Tree Sing-A-Long', 'Almond Tree - Harbour', 'Meet under the Almond Tree for a sing-a-long!', '2019-10-29', '18:00 - 20:00', '2019-10-02'),
-    (2, 'Fish Fry', 'Keegans Beach Bar', 'Come for our monthly firsh fry on the beach. Kids under 10 free!', '2019-10-20', '12:00 - until Late', '2019-10-14');
+    (1, 'Hairouns on the beach!', 'Lower Bay', 'Join us for beers and lobsters on lower bay. Family friendly.', '2019-12-31', '16:00 - 22:00', '2019-10-12'),
+    (2, 'Almond Tree Sing-A-Long', 'Almond Tree - Harbour', 'Meet under the Almond Tree for a sing-a-long!', '2019-12-31', '18:00 - 20:00', '2019-10-02'),
+    (2, 'Fish Fry', 'Keegans Beach Bar', 'Come for our monthly firsh fry on the beach. Kids under 10 free!', '2019-12-30', '12:00 - until Late', '2019-10-14');
 
 INSERT INTO job_cats
     (name, description, img_url)
