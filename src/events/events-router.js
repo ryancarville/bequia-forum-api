@@ -52,7 +52,19 @@ eventsRouter
   .get("/user/:id", (req, res, next) => {
     const db = req.app.get(db);
     const { id } = req.params;
-    EventServices.getAllEventsByUser(id);
+    EventServices.getAllEventsByUser(parseInt(id))
+      .then(data => {
+        if (!data) {
+          return res
+            .status(401)
+            .json({ error: "There are no events for your account." });
+        }
+        return res.status(200).json(data);
+      })
+      .catch(err => {
+        console.log(err);
+        next(err);
+      });
   })
   //get this upcoming weeks events
   .get("/thisWeek/:today/:nextWeek", (req, res, next) => {
