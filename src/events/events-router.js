@@ -48,9 +48,9 @@ eventsRouter
         next(err);
       });
   })
-  //get all events bu user id
+  //get all events by user id
   .get("/user/:id", (req, res, next) => {
-    const db = req.app.get(db);
+    const db = req.app.get("db");
     const { id } = req.params;
     EventServices.getAllEventsByUserId(parseInt(id))
       .then(data => {
