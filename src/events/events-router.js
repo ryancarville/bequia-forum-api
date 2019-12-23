@@ -52,7 +52,7 @@ eventsRouter
   .get("/user/:id", (req, res, next) => {
     const db = req.app.get("db");
     const { id } = req.params;
-    EventsService.getAllEventsByUserId(parseInt(id))
+    EventsService.getAllEventsByUserId(db, parseInt(id))
       .then(data => {
         if (!data) {
           return res
