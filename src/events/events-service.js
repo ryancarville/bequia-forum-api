@@ -11,7 +11,7 @@ const EventService = {
       .first();
   },
   getAllEventsByUserId(db, id) {
-    return db.from("events").where({ userid: id });
+    return db.from("events").where({ user_id: id });
   },
   insertEvent(db, newEvent) {
     return db
