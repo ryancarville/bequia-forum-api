@@ -24,7 +24,7 @@ const EventService = {
     return db
       .from("events")
       .whereBetween("event_date", [today, nextWeek])
-      .orderBy("asc", "event_date");
+      .orderBy("event_date", "asc");
   },
   updateEvent(db, updatedEvent) {
     return db
