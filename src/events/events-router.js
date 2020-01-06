@@ -17,7 +17,7 @@ eventsRouter
   //get all events
   .get("/", (req, res, next) => {
     const db = req.app.get("db");
-    EventsService.getALlEvents(db)
+    EventsService.getAllEvents(db)
       .then(events => {
         if (!events) {
           return res
