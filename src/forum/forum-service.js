@@ -5,7 +5,10 @@ const ForumService = {
     return db.select("*").from("messageboard_sections");
   },
   getBoardsForSection(db, messageboard_section) {
-    return db.from("messageboards").where({ messageboard_section });
+    return db
+      .from("messageboards")
+      .where({ messageboard_section })
+      .orderBy("date_posted", "desc");
   },
   getBoardById(db, id) {
     return db
@@ -45,7 +48,7 @@ const ForumService = {
       .from("messageboard_posts")
       .innerJoin("users", "messageboard_posts.user_id", "=", "users.id")
       .orderBy("date_posted", "desc")
-      .limit(20);
+      .limit(50);
   },
   getBoardPosts(db, board_id) {
     return db
