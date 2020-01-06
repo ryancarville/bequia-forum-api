@@ -8,7 +8,7 @@ const ForumService = {
     return db
       .from("messageboards")
       .where({ messageboard_section })
-      .orderBy("id", "desc");
+      .orderBy("id", "asc");
   },
   getBoardById(db, id) {
     return db
@@ -55,7 +55,7 @@ const ForumService = {
       .select("*")
       .from("messageboard_posts")
       .where({ board_id })
-      .orderBy("date_posted", "desc");
+      .orderBy("id", "desc");
   },
   getUserPosts(db, user_id) {
     return db.from("messageboard_posts").where({ user_id });
