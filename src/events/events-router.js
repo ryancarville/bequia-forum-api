@@ -4,7 +4,7 @@ const EventsService = require("./events-service");
 const eventsRouter = express.Router();
 //events router
 eventsRouter
-  //sort evetns
+  //sort events
   .get("/sort", (req, res, next) => {
     const db = req.app.get("db");
     EventsService.sortListings(db).then(sortedList => {

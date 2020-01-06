@@ -1,7 +1,7 @@
 const xss = require("xss");
 
 const EventService = {
-  getALlEvents(db) {
+  getAllEvents(db) {
     return db.select("*").from("events");
   },
   getEventById(db, id) {
@@ -21,7 +21,10 @@ const EventService = {
       .then(rows => rows[0]);
   },
   getThisWeeksEvents(db, today, nextWeek) {
-    return db.from("events").whereBetween("event_date", [today, nextWeek]);
+    return db
+      .from("events")
+      .whereBetween("event_date", [today, nextWeek])
+      .orderBy("asc", "event_date");
   },
   updateEvent(db, updatedEvent) {
     return db
