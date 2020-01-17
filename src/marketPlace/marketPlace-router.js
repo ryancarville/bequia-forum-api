@@ -169,7 +169,7 @@ marketPlaceRouter
             .status(401)
             .json({ error: "No listing with that id exists." });
         }
-        return res.status(200).end();
+        return res.status(200).json(rowAffected);
       })
       .catch(err => {
         console.log(err);
