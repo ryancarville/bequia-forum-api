@@ -162,7 +162,7 @@ marketPlaceRouter
   .delete("/delete/:id", (req, res, next) => {
     const db = req.app.get("db");
     const { id } = req.params;
-    MarketPlaceService.deleteListing(db, id)
+    MarketPlaceService.deleteListing(db, parseInt(id))
       .then(rowAffected => {
         if (!rowAffected) {
           return res
