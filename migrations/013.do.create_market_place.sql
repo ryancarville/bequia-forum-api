@@ -9,5 +9,7 @@ CREATE TABLE IF NOT EXISTS market_place(
     contact_name TEXT,
     contact_email TEXT, 
     contact_phone TEXT,
+    imagesToUpload TEXT,
+    imageCaptions TEXT,
     date_posted DATE DEFAULT now() NOT NULL
 )

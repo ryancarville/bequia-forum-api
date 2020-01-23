@@ -71,6 +71,8 @@ marketPlaceRouter
       contact_name,
       contact_email,
       contact_phone,
+      imagesToUpload,
+      imageCaptions,
       date_posted
     } = req.body;
     const newListing = {
@@ -83,9 +85,11 @@ marketPlaceRouter
       contact_name,
       contact_email,
       contact_phone,
+      imagesToUpload,
+      imageCaptions,
       date_posted
     };
-    for (const feild of [
+    for (const field of [
       "market_place_cat",
       "user_id",
       "title",
@@ -93,10 +97,10 @@ marketPlaceRouter
       "contact_name",
       "contact_email"
     ])
-      if (!req.body[feild]) {
+      if (!req.body[field]) {
         return res
           .status(401)
-          .json({ error: `Request body must contain ${feild}` });
+          .json({ error: `Request body must contain ${field}` });
       }
     MarketPlaceService.insertListing(db, newListing)
       .then(listing => {
