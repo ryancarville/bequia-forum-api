@@ -18,7 +18,7 @@ const eventsRouter = require("./events/events-router");
 const rentalsRouter = require("./rentals/rentals-router");
 const marketPlaceRouter = require("./marketPlace/marketPlace-router");
 const directoryRouter = require("./directory/directory-router");
-
+const calabashEmail = require("./calabashEmail/calabashEmail");
 app.use(morgan(morganOption));
 app.use(cors());
 app.use(
@@ -39,6 +39,7 @@ app.use("/jobs", jobsRouter);
 app.use("/rentals", rentalsRouter);
 app.use("/marketPlace", marketPlaceRouter);
 app.use("/directory", directoryRouter);
+app.use("/calabashEmail", calabashEmail);
 //error handler
 app.use(function errorHandler(error, req, res, next) {
   let response;

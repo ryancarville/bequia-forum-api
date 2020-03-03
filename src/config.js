@@ -10,6 +10,8 @@ module.exports = {
   JWT_EXPIRY: process.env.JWT_EXPIRY || "120m",
   TEST_DATABASE_URL:
     process.env.TEST_DATABASE_URL ||
-    "postgresql://ryancarville@localhost/bequia-forum"
+    "postgresql://ryancarville@localhost/bequia-forum",
+  EMAIL_USER: "hello@calabashvillabequia.com",
+  EMAIL_PASS: "1219Smile"
 };
 //
