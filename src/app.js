@@ -40,13 +40,16 @@ app.use("/rentals", rentalsRouter);
 app.use("/marketPlace", marketPlaceRouter);
 app.use("/directory", directoryRouter);
 app.use("/calabashEmail", calabashEmail);
-//error handler
-app.use(function errorHandler(error, req, res, next) {
-  let response;
+app.use(function(req, res, next) {
   res.setHeader(
     "Access-Control-Allow-Origin",
     "https://calabashvillabequia.com"
   );
+  next();
+});
+//error handler
+app.use(function errorHandler(error, req, res, next) {
+  let response;
 
   if (NODE_ENV === "production") {
     response = { error: { message: "server error" } };
