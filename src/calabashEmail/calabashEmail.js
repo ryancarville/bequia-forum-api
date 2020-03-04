@@ -28,11 +28,11 @@ router.post("/send", (req, res, next) => {
   var departureDate = req.body.departureDate;
   var defender = req.body.defender;
   var message = req.body.message;
-  var content = `name: ${fullName} \n email: ${email} \n arrival date: ${arrivalDate} \n departure date: ${departureDate} \n defender: ${defender} \n message: ${message} `;
+  var content = `name: ${name} \n email: ${email} \n arrival date: ${arrivalDate} \n departure date: ${departureDate} \n defender: ${defender} \n message: ${message} `;
 
   var mail = {
-    from: name,
-    to: credS.EMAIL_USER, // Change to email address that you want to receive messages on
+    from: email,
+    to: creds.EMAIL_USER, // Change to email address that you want to receive messages on
     subject: "New Message from Contact Form",
     text: content
   };

@@ -43,6 +43,11 @@ app.use("/calabashEmail", calabashEmail);
 //error handler
 app.use(function errorHandler(error, req, res, next) {
   let response;
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "https://calabashvillabequia.com"
+  );
+
   if (NODE_ENV === "production") {
     response = { error: { message: "server error" } };
   } else {
