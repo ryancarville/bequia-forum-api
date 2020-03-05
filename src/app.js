@@ -23,7 +23,7 @@ app.use(morgan(morganOption));
 app.use(cors());
 app.use(
   cors({
-    origin: "https://calabashvillabequia.com"
+    origin: ["https://calabashvillabequia.com", "*"]
   })
 );
 
