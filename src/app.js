@@ -20,7 +20,6 @@ const marketPlaceRouter = require("./marketPlace/marketPlace-router");
 const directoryRouter = require("./directory/directory-router");
 const calabashEmail = require("./calabashEmail/calabashEmail");
 app.use(morgan(morganOption));
-app.use(cors());
 app.use(
   cors({
     origin: "*"
