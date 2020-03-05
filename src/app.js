@@ -26,6 +26,10 @@ app.use(
     origin: CLIENT_ORIGIN
   })
 );
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin: *");
+  next();
+});
 app.use(helmet());
 app.use(jsonBodyParser);
 //paths
@@ -40,10 +44,7 @@ app.use("/rentals", rentalsRouter);
 app.use("/marketPlace", marketPlaceRouter);
 app.use("/directory", directoryRouter);
 app.use("/calabashEmail", calabashEmail);
-app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin: *");
-  next();
-});
+
 //error handler
 app.use(function errorHandler(error, req, res, next) {
   let response;
