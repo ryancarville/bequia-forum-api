@@ -41,10 +41,7 @@ app.use("/marketPlace", marketPlaceRouter);
 app.use("/directory", directoryRouter);
 app.use("/calabashEmail", calabashEmail);
 app.use(function(req, res, next) {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "https://calabashvillabequia.com"
-  );
+  res.setHeader("Access-Control-Allow-Origin: *");
   next();
 });
 //error handler
