@@ -26,10 +26,7 @@ app.use(
     origin: CLIENT_ORIGIN
   })
 );
-app.use(function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin: *");
-  next();
-});
+
 app.use(helmet());
 app.use(jsonBodyParser);
 //paths
