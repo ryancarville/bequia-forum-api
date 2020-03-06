@@ -24,20 +24,20 @@ forumRouter
   })
   //get all boards
   .get("/messageBoards", (req, res, next) => {
-    const db = req.app.get("db");
-    ForumService.getAllMessageBoards(db)
-      .then(boards => {
-        if (!boards) {
-          return res.status(500).json({
-            error: "Something went wrong when retrieving the message boards."
-          });
-        }
-        return res.status(200).json(boards);
-      })
-      .catch(err => {
-        console.log(err);
-        next(err);
-      });
+    // const db = req.app.get("db");
+    // ForumService.getAllMessageBoards(db)
+    //   .then(boards => {
+    //     if (!boards) {
+    //       return res.status(500).json({
+    //         error: "Something went wrong when retrieving the message boards."
+    //       });
+    //     }
+    //     return res.status(200).json(boards);
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //     next(err);
+    //});
   })
   //get a message board by id
   .get("/messageboards/get-board/:id", (req, res, next) => {
