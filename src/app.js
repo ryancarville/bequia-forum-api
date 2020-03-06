@@ -20,11 +20,8 @@ const marketPlaceRouter = require("./marketPlace/marketPlace-router");
 const directoryRouter = require("./directory/directory-router");
 const calabashEmail = require("./calabashEmail/calabashEmail");
 app.use(morgan(morganOption));
-// app.use(
-//   cors({
-//     origin: "*"
-//   })
-// );
+app.use(cors());
+app.options("*", cors());
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
