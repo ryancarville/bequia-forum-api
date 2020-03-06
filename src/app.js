@@ -51,7 +51,9 @@ app.use("/rentals", rentalsRouter);
 app.use("/marketPlace", marketPlaceRouter);
 app.use("/directory", directoryRouter);
 app.use("/calabashEmail", calabashEmail);
-
+app.get("/trash", (res, req, next) => {
+  return res.json({ is: "working" });
+});
 //error handler
 app.use(function errorHandler(error, req, res, next) {
   let response;
