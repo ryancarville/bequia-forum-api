@@ -20,12 +20,26 @@ const marketPlaceRouter = require("./marketPlace/marketPlace-router");
 const directoryRouter = require("./directory/directory-router");
 const calabashEmail = require("./calabashEmail/calabashEmail");
 app.use(morgan(morganOption));
-app.use(
-  cors({
-    origin: "*"
-  })
-);
-
+// app.use(
+//   cors({
+//     origin: "*"
+//   })
+// );
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Accept, Authorization, Content-Type, Origin, X-Requested-With"
+  );
+  res.header(
+    "Access-Control-Allow-Methods",
+    "DELETE, GET, OPTIONS, PATCH, POST, PUT"
+  );
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204);
+  }
+  next();
+});
 app.use(helmet());
 app.use(jsonBodyParser);
 //paths
