@@ -1,5 +1,5 @@
 var nodemailer = require("nodemailer");
-const creds = require("./config");
+const creds = require("../config");
 const express = require("express");
 const router = express.router();
 var transport = {
