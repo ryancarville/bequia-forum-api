@@ -1,7 +1,7 @@
 var nodemailer = require("nodemailer");
 const creds = require("../config");
 const express = require("express");
-const router = express.Router();
+const email = express.Router();
 var transport = {
   host: "patriots.unisonplatform.com", // Don’t forget to replace with the SMTP host of your provider
   port: 465,
@@ -21,7 +21,7 @@ transporter.verify((error, success) => {
   }
 });
 
-router.post("/send", (req, res, next) => {
+email.post("/send", (req, res, next) => {
   var name = req.body.fullName;
   var email = req.body.email;
   var arrivalDate = req.body.arrivalDate;
