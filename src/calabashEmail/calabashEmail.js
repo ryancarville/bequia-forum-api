@@ -49,3 +49,4 @@ emailRouter.post("/send", (req, res, next) => {
     }
   });
 });
+module.exports = emailRouter;
