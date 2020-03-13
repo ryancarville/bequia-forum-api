@@ -18,7 +18,7 @@ const eventsRouter = require("./events/events-router");
 const rentalsRouter = require("./rentals/rentals-router");
 const marketPlaceRouter = require("./marketPlace/marketPlace-router");
 const directoryRouter = require("./directory/directory-router");
-const calabashEmail = require("./calabashEmail/calabashEmail");
+const calabash = require("./calabash/calabash-router");
 app.use(morgan(morganOption));
 app.use(cors());
 app.options("*", cors());
@@ -50,7 +50,7 @@ app.use("/jobs", jobsRouter);
 app.use("/rentals", rentalsRouter);
 app.use("/marketPlace", marketPlaceRouter);
 app.use("/directory", directoryRouter);
-app.use("/calabashEmail", calabashEmail);
+app.use("/calabash", calabash);
 app.get("/trash", (res, req, next) => {
   return res.json({ is: "working" });
 });
