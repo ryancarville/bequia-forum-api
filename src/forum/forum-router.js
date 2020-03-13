@@ -23,7 +23,7 @@ forumRouter
       });
   })
   //get all boards
-  .get("/messageBoardsX", (req, res, next) => {
+  .get("/messageBoards", (req, res, next) => {
     // const db = req.app.get("db");
     // ForumService.getAllMessageBoards(db)
     //   .then(boards => {

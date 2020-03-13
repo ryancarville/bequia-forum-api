@@ -50,7 +50,7 @@ calabashRouter.post("/help", (req, res, next) => {
   var mail = {
     from: email,
     to: creds.EMAIL_USER, // Change to email address that you want to receive messages on
-    subject: "New Booking Enquiry for Calabash",
+    subject: `URGENT||Guest Help Request regarding: ${reason}`,
     text: content
   };
 
