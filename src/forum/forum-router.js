@@ -99,14 +99,15 @@ forumRouter
         next(err);
       });
   })
-  //get the newest 8 posts
+  //get the newest 50 posts
   .get("/newestPosts", (req, res, next) => {
     const db = req.app.get("db");
     ForumService.getNewestPosts(db)
       .then((posts) => {
+        console.log(posts);
         if (!posts) {
           return res
-            .state(401)
+            .state(404)
             .json({ error: "Something went wrong when retriving posts." });
         }
         return res.status(200).json(posts);
