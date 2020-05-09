@@ -104,10 +104,9 @@ forumRouter
     const db = req.app.get("db");
     ForumService.getNewestPosts(db)
       .then((posts) => {
-        console.log(posts);
         if (!posts) {
           return res
-            .state(404)
+            .status(401)
             .json({ error: "Something went wrong when retriving posts." });
         }
         return res.status(200).json(posts);
