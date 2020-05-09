@@ -11,26 +11,16 @@ const ForumService = {
       .orderBy("id", "asc");
   },
   getBoardById(db, id) {
-    return db
-      .from("messageboards")
-      .where({ id })
-      .first();
+    return db.from("messageboards").where({ id }).first();
   },
   getForumNameById(db, id) {
-    return db
-      .select("name")
-      .from("messageboards")
-      .where({ id })
-      .first();
+    return db.select("name").from("messageboards").where({ id }).first();
   },
   getAllMessageBoards(db) {
     return db.from("messageboards");
   },
   getNumOfThreads(db, board_id) {
-    return db
-      .count("board_id")
-      .from("messageboard_posts")
-      .where({ board_id });
+    return db.count("board_id").from("messageboard_posts").where({ board_id });
   },
 
   getNewestPosts(db) {
@@ -70,10 +60,7 @@ const ForumService = {
     return db.from("market_place").where({ user_id });
   },
   getPostById(db, id) {
-    return db
-      .from("messageboard_posts")
-      .where({ id })
-      .first();
+    return db.from("messageboard_posts").where({ id }).first();
   },
   getSpecificBoardPosts(db, board_id) {
     return db
@@ -96,16 +83,10 @@ const ForumService = {
       .where("title", "ilike", `%${term}%`);
   },
   searchJobs(db, term) {
-    return db
-      .select("*")
-      .from("jobs")
-      .where("title", "ilike", `%${term}%`);
+    return db.select("*").from("jobs").where("title", "ilike", `%${term}%`);
   },
   searchRentals(db, term) {
-    return db
-      .select("*")
-      .from("rentals")
-      .where("title", "ilike", `%${term}%`);
+    return db.select("*").from("rentals").where("title", "ilike", `%${term}%`);
   },
   searchMarketPlace(db, term) {
     return db
@@ -127,7 +108,7 @@ const ForumService = {
       .into("messageboard_posts")
       .insert(newPost)
       .returning("*")
-      .then(rows => rows[0]);
+      .then((rows) => rows[0]);
   },
   updatePost(db, updatedPost) {
     return db
@@ -136,36 +117,30 @@ const ForumService = {
       .update(updatedPost);
   },
   deletePost(db, id) {
-    return db
-      .from("messageboard_posts")
-      .where({ id })
-      .delete();
+    return db.from("messageboard_posts").where({ id }).delete();
   },
   getLikesTracker(db, user_id, post_id) {
-    return db
-      .from("likes_tracker")
-      .where({ user_id })
-      .andWhere({ post_id });
+    return db.from("likes_tracker").where({ user_id }).andWhere({ post_id });
   },
   addLike(db, id) {
     return db("messageboard_posts")
       .where({ id })
       .increment("likes", "1")
       .returning("*")
-      .then(rows => rows[0]);
+      .then((rows) => rows[0]);
   },
   addTrackerInfo(db, info) {
     return db("likes_tracker")
       .insert(info)
       .returning("*")
-      .then(rows => rows[0]);
+      .then((rows) => rows[0]);
   },
   minusLike(db, id) {
     return db("messageboard_posts")
       .where({ id })
       .decrement("likes", "1")
       .returning("*")
-      .then(rows => rows[0]);
+      .then((rows) => rows[0]);
   },
   deleteTrackerInfo(db, info) {
     return db("likes_tracker")
@@ -180,8 +155,8 @@ const ForumService = {
       title: xss(newPost.title),
       content: xss(newPost.content),
       dateposted: newPost.date_posted,
-      likes: newPost.likes
+      likes: newPost.likes,
     };
-  }
+  },
 };
 module.exports = ForumService;

@@ -8,36 +8,36 @@ forumRouter
   .get("/catagories", (req, res, next) => {
     const db = req.app.get("db");
     ForumService.getMessageBoardSections(db)
-      .then(sections => {
+      .then((sections) => {
         if (!sections) {
           return res.status(401).json({
             error:
-              "Something went wrong when retrieving message board sections."
+              "Something went wrong when retrieving message board sections.",
           });
         }
         return res.status(200).json(sections);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
   })
   //get all boards
   .get("/messageBoards", (req, res, next) => {
-    // const db = req.app.get("db");
-    // ForumService.getAllMessageBoards(db)
-    //   .then(boards => {
-    //     if (!boards) {
-    //       return res.status(500).json({
-    //         error: "Something went wrong when retrieving the message boards."
-    //       });
-    //     }
-    //     return res.status(200).json(boards);
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //     next(err);
-    //});
+    const db = req.app.get("db");
+    ForumService.getAllMessageBoards(db)
+      .then((boards) => {
+        if (!boards) {
+          return res.status(500).json({
+            error: "Something went wrong when retrieving the message boards.",
+          });
+        }
+        return res.status(200).json(boards);
+      })
+      .catch((err) => {
+        console.log(err);
+        next(err);
+      });
   })
   //get a message board by id
   .get("/messageboards/get-board/:id", (req, res, next) => {
@@ -45,16 +45,16 @@ forumRouter
     var { id } = req.params;
     id = parseInt(id, 10);
     ForumService.getBoardById(db, id)
-      .then(boardName => {
+      .then((boardName) => {
         if (boardName.length === 0) {
           return res.status(200).json({
-            error: `There are no boards for that section.`
+            error: `There are no boards for that section.`,
           });
         }
 
         return res.status(200).json(boardName);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -65,16 +65,16 @@ forumRouter
     var { id } = req.params;
     id = parseInt(id, 10);
     ForumService.getForumNameById(db, id)
-      .then(boardName => {
+      .then((boardName) => {
         if (boardName.length === 0) {
           return res.status(200).json({
-            error: `There are no boards for that section.`
+            error: `There are no boards for that section.`,
           });
         }
 
         return res.status(200).json(boardName);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -85,16 +85,16 @@ forumRouter
     var { board_id } = req.params;
     board_id = parseInt(board_id, 10);
     ForumService.getBoardPosts(db, board_id)
-      .then(boardPosts => {
+      .then((boardPosts) => {
         if (boardPosts.length === 0) {
           return res.status(200).json({
-            error: `There are no boards for that section.`
+            error: `There are no boards for that section.`,
           });
         }
 
         return res.status(200).json(boardPosts);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -103,7 +103,7 @@ forumRouter
   .get("/newestPosts", (req, res, next) => {
     const db = req.app.get("db");
     ForumService.getNewestPosts(db)
-      .then(posts => {
+      .then((posts) => {
         if (!posts) {
           return res
             .state(401)
@@ -111,7 +111,7 @@ forumRouter
         }
         return res.status(200).json(posts);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -122,7 +122,7 @@ forumRouter
     const { user_id } = req.params;
     const userPosts = [];
     ForumService.getUserPosts(db, user_id)
-      .then(posts => {
+      .then((posts) => {
         if (posts.length < 0) {
           return;
         }
@@ -130,7 +130,7 @@ forumRouter
       })
       .then(() => {
         ForumService.getUserJobListings(db, user_id)
-          .then(listings => {
+          .then((listings) => {
             if (listings.length < 0) {
               return;
             }
@@ -138,7 +138,7 @@ forumRouter
           })
           .then(() => {
             ForumService.getUserRentalPosts(db, user_id)
-              .then(listings => {
+              .then((listings) => {
                 if (listings.length < 0) {
                   return;
                 }
@@ -146,7 +146,7 @@ forumRouter
               })
               .then(() => {
                 ForumService.getUserMarketPlacePosts(db, user_id)
-                  .then(listings => {
+                  .then((listings) => {
                     if (listings.length < 0) {
                       return;
                     }
@@ -163,7 +163,7 @@ forumRouter
               });
           });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -173,7 +173,7 @@ forumRouter
     const db = req.app.get("db");
     const { board_id } = req.params;
     ForumService.getNumOfThreads(db, board_id)
-      .then(numOfThreads => {
+      .then((numOfThreads) => {
         if (!numOfThreads) {
           return res
             .status(404)
@@ -181,7 +181,7 @@ forumRouter
         }
         return res.status(200).json(numOfThreads);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -192,16 +192,16 @@ forumRouter
     var { id } = req.params;
     id = parseInt(id, 10);
     ForumService.getPostById(db, id)
-      .then(post => {
+      .then((post) => {
         if (post.length === 0) {
           return res.status(200).json({
-            error: `There are no posts with that id.`
+            error: `There are no posts with that id.`,
           });
         }
 
         return res.status(200).json(post);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -212,15 +212,15 @@ forumRouter
     var { messageboard_section } = req.params;
     messageboard_section = parseInt(messageboard_section, 10);
     ForumService.getBoardsForSection(db, messageboard_section)
-      .then(boards => {
+      .then((boards) => {
         if (boards.length === 0) {
           return res.status(200).json({
-            error: `There are no boards for that section.`
+            error: `There are no boards for that section.`,
           });
         }
         return res.status(200).json(boards);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -231,7 +231,7 @@ forumRouter
     var { term } = req.params;
     let posts = [{ siteSearch: true }];
     ForumService.searchAllBoardPosts(db, term)
-      .then(mbPosts => {
+      .then((mbPosts) => {
         if (mbPosts.length === 0) {
           return;
         } else {
@@ -239,7 +239,7 @@ forumRouter
         }
       })
       .then(() => {
-        return ForumService.searchMarketPlace(db, term).then(mpPosts => {
+        return ForumService.searchMarketPlace(db, term).then((mpPosts) => {
           if (mpPosts.length === 0) {
             return;
           } else {
@@ -248,7 +248,7 @@ forumRouter
         });
       })
       .then(() => {
-        return ForumService.searchRentals(db, term).then(rPosts => {
+        return ForumService.searchRentals(db, term).then((rPosts) => {
           if (rPosts.length === 0) {
             return;
           } else {
@@ -257,7 +257,7 @@ forumRouter
         });
       })
       .then(() => {
-        return ForumService.searchJobs(db, term).then(jPosts => {
+        return ForumService.searchJobs(db, term).then((jPosts) => {
           if (jPosts.length === 0) {
             return;
           } else {
@@ -274,7 +274,7 @@ forumRouter
           return res.status(200).json(posts);
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -284,20 +284,20 @@ forumRouter
     const db = req.app.get("db");
     var { board_id, term } = req.params;
     let board_name;
-    ForumService.getForumNameById(db, board_id).then(name => {
+    ForumService.getForumNameById(db, board_id).then((name) => {
       board_name = name.name;
     });
     ForumService.searchBoardPosts(db, board_id, term)
-      .then(posts => {
+      .then((posts) => {
         if (posts.length === 0) {
           return res.status(404).json({
-            message: `There are no search results with the term '${term}' in ${board_name}.`
+            message: `There are no search results with the term '${term}' in ${board_name}.`,
           });
         }
 
         return res.status(200).json({ specificBoard: posts });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -309,7 +309,7 @@ forumRouter
     user_id = parseInt(user_id, 10);
     post_id = parseInt(post_id, 10);
     ForumService.getLikesTracker(db, user_id, post_id)
-      .then(tracker => {
+      .then((tracker) => {
         if (!tracker) {
           return res
             .status(401)
@@ -319,7 +319,7 @@ forumRouter
         }
         return res.status(200).json(tracker);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -334,7 +334,7 @@ forumRouter
       "user_id",
       "title",
       "content",
-      "date_posted"
+      "date_posted",
     ])
       if (!req.body[field]) {
         return res
@@ -342,7 +342,7 @@ forumRouter
           .json({ error: `Must contain ${field} in request body.` });
       }
     ForumService.insertPost(db, newPost)
-      .then(post => {
+      .then((post) => {
         if (!post) {
           return res.status(401).json({ error: "Could not add your post." });
         }
@@ -353,7 +353,7 @@ forumRouter
           )
           .json(ForumService.serializePost(post));
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -366,17 +366,17 @@ forumRouter
     const numOfValues = Object.entries(postToUpdate).filter(Boolean).length;
     if (numOfValues === 0) {
       return res.status(401).json({
-        error: "Request body must contain title or content."
+        error: "Request body must contain title or content.",
       });
     }
     ForumService.updatePost(db, postToUpdate)
-      .then(post => {
+      .then((post) => {
         if (!post) {
           return res.status(401).json({ error: `Post doesn't exists.` });
         }
         res.status(201).json(ForumService.serializePost(post));
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -391,7 +391,7 @@ forumRouter
         .json({ error: `Request body must conatin post_id.` });
     }
     ForumService.addLike(db, post_id)
-      .then(row => {
+      .then((row) => {
         if (!row) {
           return res
             .status(401)
@@ -399,7 +399,7 @@ forumRouter
         }
         return res.status(201).json(row);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -414,7 +414,7 @@ forumRouter
         .json({ error: `Request body must contain post_id.` });
     }
     ForumService.minusLike(db, post_id)
-      .then(row => {
+      .then((row) => {
         if (!row) {
           return res
             .status(401)
@@ -422,7 +422,7 @@ forumRouter
         }
         return res.status(201).json(row);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -439,7 +439,7 @@ forumRouter
           .json({ error: `Request body must contain ${feild}.` });
       }
     ForumService.addTrackerInfo(db, newInfo)
-      .then(row => {
+      .then((row) => {
         if (!row) {
           return res
             .status(401)
@@ -447,7 +447,7 @@ forumRouter
         }
         return res.status(201).json(row);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -465,7 +465,7 @@ forumRouter
           .json({ error: `Request body must contain ${field}.` });
       }
     ForumService.deleteTrackerInfo(db, infoToDelete)
-      .then(rowsAffected => {
+      .then((rowsAffected) => {
         if (!rowsAffected) {
           return res
             .status(401)
@@ -473,7 +473,7 @@ forumRouter
         }
         return res.status(201).json(rowsAffected);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
@@ -484,13 +484,13 @@ forumRouter
     var { post_id } = req.params;
     post_id = parseInt(post_id);
     ForumService.deletePost(db, post_id)
-      .then(rowAffected => {
+      .then((rowAffected) => {
         if (!rowAffected) {
           return res.status(401).json({ error: `Post doesn't exist.` });
         }
         res.status(201).json(rowAffected);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         next(err);
       });
